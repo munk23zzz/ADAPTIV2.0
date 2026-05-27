@@ -1,0 +1,379 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const questions = [
+  {
+    id: 1,
+    title: 'Saat guru menjelaskan materi baru, kamu lebih gampang paham kalau…',
+    options: [
+      { id: 'A', icon: '🖼️', text: 'Dijelaskan lewat gambar, diagram, atau slide' },
+      { id: 'B', icon: '🗣️', text: 'Dijelaskan lewat suara atau penjelasan lisan' },
+      { id: 'C', icon: '🛠️', text: 'Langsung praktik atau mencoba sendiri' }
+    ]
+  },
+  {
+    id: 2,
+    title: 'Kalau lagi menghafal sesuatu, kamu biasanya…',
+    options: [
+      { id: 'A', icon: '📖', text: 'Membaca dan melihat catatan berulang' },
+      { id: 'B', icon: '🎙️', text: 'Mengucapkan atau mendengarkan rekaman' },
+      { id: 'C', icon: '✍️', text: 'Menulis ulang sambil bergerak atau praktik' }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Saat belajar sendirian, metode yang paling nyaman buat kamu adalah…',
+    options: [
+      { id: 'A', icon: '🎨', text: 'Menonton video atau peta pikiran warna-warni' },
+      { id: 'B', icon: '🎧', text: 'Mendengarkan audio/penjelasan orang' },
+      { id: 'C', icon: '🏃', text: 'Belajar sambil melakukan aktivitas langsung' }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Kalau disuruh menjelaskan jalan ke suatu tempat, kamu lebih sering…',
+    options: [
+      { id: 'A', icon: '🗺️', text: 'Menggambar peta atau menunjuk arah visual' },
+      { id: 'B', icon: '💬', text: 'Menjelaskan lewat kata-kata' },
+      { id: 'C', icon: '🚶', text: 'Mengajak orangnya langsung mengikuti rute' }
+    ]
+  },
+  {
+    id: 5,
+    title: 'Saat mencoba memahami pelajaran sulit, kamu biasanya…',
+    options: [
+      { id: 'A', icon: '🖍️', text: 'Fokus ke tulisan, grafik, atau sorotan' },
+      { id: 'B', icon: '👥', text: 'Diskusi atau mendengarkan penjelasan teman' },
+      { id: 'C', icon: '🧪', text: 'Pakai simulasi, praktik, atau bermain peran' }
+    ]
+  },
+  {
+    id: 6,
+    title: 'Hal yang paling mudah kamu ingat biasanya…',
+    options: [
+      { id: 'A', icon: '👤', text: 'Wajah, warna, atau tampilan' },
+      { id: 'B', icon: '🎵', text: 'Suara, nada bicara, atau lagu' },
+      { id: 'C', icon: '🌟', text: 'Pengalaman yang pernah dilakukan langsung' }
+    ]
+  },
+  {
+    id: 7,
+    title: 'Saat bosan belajar, kamu lebih memilih…',
+    options: [
+      { id: 'A', icon: '📺', text: 'Cari video atau ilustrasi menarik' },
+      { id: 'B', icon: '🎼', text: 'Mendengarkan musik atau ngobrol soal materi' },
+      { id: 'C', icon: '🤸', text: 'Jalan-jalan sebentar atau belajar sambil bergerak' }
+    ]
+  }
+];
+
+const Onboarding = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [showTerms, setShowTerms] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (showWelcome) {
+      const timer = setTimeout(() => {
+        navigate('/dashboard');
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [showWelcome, navigate]);
+
+  const handleSelectOption = (questionId, optionId) => {
+    setAnswers({ ...answers, [questionId]: optionId });
+  };
+
+  const handleNext = () => {
+    if (currentStep < questions.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      finishOnboarding();
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const finishOnboarding = () => {
+    setShowTerms(true);
+  };
+
+  const skipOnboarding = () => {
+    setShowTerms(true);
+  };
+
+  const handleAcceptTerms = () => {
+    setShowTerms(false);
+    setIsAnalyzing(true);
+    // Simulate API call for analyzing
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setShowWelcome(true);
+    }, 2500);
+  };
+
+  const progressPercentage = ((currentStep + 1) / questions.length) * 100;
+  
+  const currentQuestion = questions[currentStep];
+  const isOptionSelected = !!answers[currentQuestion.id];
+
+  if (showWelcome) {
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0f]">
+        {/* Background elements so it doesn't look completely flat */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-light/10 dark:bg-primary-dark/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none z-0"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary-light/10 dark:bg-secondary-dark/10 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/3 pointer-events-none z-0"></div>
+
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.8 } }}
+          className="relative z-10 w-full h-full flex items-center justify-center backdrop-blur-xl"
+        >
+          <motion.div 
+            initial={{ y: 20, scale: 0.95 }}
+            animate={{ y: 0, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+            className="text-center px-4 max-w-2xl"
+          >
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 pb-2 bg-gradient-to-r from-emerald-400 to-indigo-500 text-transparent bg-clip-text flex justify-center items-center gap-3">
+              Selamat datang, Lloyd <span className="text-4xl md:text-5xl inline-block" style={{ WebkitTextFillColor: 'initial' }}>👋</span>
+            </h1>
+            <p className="text-lg text-slate-300 font-medium leading-relaxed">
+              AI telah menyesuaikan profil belajarmu. Mari jelajahi pengalaman belajar baru di ADAPTIV.
+            </p>
+          </motion.div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (showTerms) {
+    return (
+      <div className="min-h-screen bg-black/80 flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          className="bg-[#1c212b] border border-slate-700/50 w-full max-w-2xl rounded-2xl overflow-hidden flex flex-col shadow-2xl max-h-[90vh]"
+        >
+          <div className="p-6 border-b border-slate-700/50 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xl">
+              🤖
+            </div>
+            <h2 className="text-xl font-bold text-white">Syarat & Ketentuan</h2>
+          </div>
+          
+          <div className="p-6 overflow-y-auto flex-1 text-slate-300 text-sm leading-relaxed space-y-6 custom-scrollbar">
+            <p>
+              Dengan menggunakan aplikasi <strong>ADAPTIV</strong>, pengguna dianggap telah membaca, memahami, dan menyetujui seluruh syarat dan ketentuan yang berlaku pada platform ini. ADAPTIV merupakan aplikasi pembelajaran berbasis AI yang dirancang untuk membantu pengguna dalam mencatat, merangkum materi, menyesuaikan metode belajar, serta meningkatkan efektivitas pembelajaran secara personal.
+            </p>
+
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+                Kebijakan Privasi & Penggunaan Data AI
+              </h3>
+              <ul className="space-y-3">
+                <li><strong>Privasi Data Pengguna:</strong> ADAPTIV berkomitmen untuk menjaga keamanan dan kerahasiaan seluruh data pengguna. Dokumen, catatan, file, maupun percakapan yang diunggah ke dalam sistem hanya digunakan untuk mendukung pengalaman belajar pengguna di dalam aplikasi.</li>
+                <li><strong>Penggunaan Data AI:</strong> Data dan materi yang diunggah pengguna tidak akan digunakan untuk melatih model AI publik tanpa izin pengguna. Sistem AI ADAPTIV hanya memproses data untuk memberikan rekomendasi pembelajaran yang lebih personal dan relevan.</li>
+                <li><strong>Akses dan Keamanan:</strong> Riwayat pembelajaran dan dokumen pengguna bersifat pribadi dan tidak akan ditinjau secara manual oleh pihak internal, kecuali jika pengguna memberikan laporan, umpan balik, atau izin tertentu untuk keperluan evaluasi layanan.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+                Hak Cipta & Tanggung Jawab Pengguna
+              </h3>
+              <ul className="space-y-3">
+                <li><strong>Kepemilikan Konten:</strong> Pengguna bertanggung jawab penuh atas seluruh dokumen, gambar, maupun materi yang diunggah ke dalam aplikasi. Pengguna dilarang mengunggah konten yang melanggar hak cipta, hak kekayaan intelektual, atau hukum yang berlaku.</li>
+                <li><strong>Penggunaan yang Bertanggung Jawab:</strong> Pengguna wajib menggunakan ADAPTIV untuk tujuan pendidikan, pengembangan diri, dan aktivitas yang tidak melanggar hukum maupun merugikan pihak lain.</li>
+                <li><strong>Konten Sensitif:</strong> Pengguna tidak diperkenankan mengunggah data yang bersifat sangat rahasia atau sensitif tanpa perlindungan tambahan, termasuk informasi medis, finansial, maupun data pribadi tertentu.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+                Batasan Penggunaan Layanan
+              </h3>
+              <ul className="space-y-3">
+                <li><strong>Kapasitas Sistem:</strong> ADAPTIV dapat menerapkan batas ukuran file, jumlah dokumen, maupun kapasitas penyimpanan tertentu untuk menjaga stabilitas dan performa layanan.</li>
+                <li><strong>Persyaratan Akun:</strong> Pengguna wajib menggunakan akun yang valid dan menjaga keamanan informasi login masing-masing. Segala aktivitas yang dilakukan melalui akun pengguna menjadi tanggung jawab pemilik akun.</li>
+                <li><strong>Kebijakan Penggunaan:</strong> ADAPTIV berhak membatasi atau menghentikan akses pengguna apabila ditemukan pelanggaran terhadap syarat penggunaan, penyalahgunaan sistem, atau aktivitas yang membahayakan platform dan pengguna lain.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+                Pembaruan Layanan
+              </h3>
+              <p>
+                ADAPTIV dapat memperbarui fitur, kebijakan, dan aturan penggunaan dari waktu ke waktu demi meningkatkan kualitas layanan dan keamanan pengguna. Pengguna disarankan untuk membaca Syarat dan Ketentuan secara berkala.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 border-t border-slate-700/50 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <label className="flex items-start gap-3 cursor-pointer group flex-1">
+              <div className="relative flex items-center justify-center w-5 h-5 mt-0.5">
+                <input 
+                  type="checkbox" 
+                  className="peer appearance-none w-5 h-5 border-2 border-slate-500 rounded-sm checked:bg-emerald-500 checked:border-emerald-500 transition-all cursor-pointer"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                />
+                <span className="material-icons-round text-white text-[14px] absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+              </div>
+              <span className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
+                Saya telah membaca dan menyetujui seluruh syarat dan ketentuan aplikasi ADAPTIV.
+              </span>
+            </label>
+            
+            <button
+              onClick={handleAcceptTerms}
+              disabled={!termsAccepted}
+              className={`shrink-0 px-6 py-3 rounded-lg font-bold transition-all ${termsAccepted ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-900 shadow-lg shadow-emerald-500/20' : 'bg-slate-700 text-slate-500 cursor-not-allowed'}`}
+            >
+              Mulai Belajar
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (isAnalyzing) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-black flex flex-col items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="w-16 h-16 border-4 border-primary-light/30 dark:border-primary-dark/30 border-t-primary-light dark:border-t-primary-dark rounded-full animate-spin mx-auto mb-6"></div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Menganalisis Profil Belajarmu...</h2>
+          <p className="text-slate-500 dark:text-slate-400">Menyiapkan Tutor AI dan algoritma penyortiran fitur.</p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0f] text-slate-800 dark:text-slate-200 transition-colors duration-300 overflow-hidden flex flex-col relative z-10">
+      
+      {/* Background Ornaments */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-light/10 dark:bg-primary-dark/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none z-0"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary-light/10 dark:bg-secondary-dark/10 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/3 pointer-events-none z-0"></div>
+
+      <header className="w-full max-w-4xl mx-auto p-4 md:p-6 flex items-center justify-between relative z-10">
+        <div className="font-orbitron font-bold text-xl tracking-widest text-primary-light dark:text-primary-dark">
+          ADAPTIV
+        </div>
+        
+        <div className="flex-1 max-w-xs mx-4">
+          <div className="flex justify-between items-end mb-2">
+            <span className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+              Langkah {currentStep + 1} dari {questions.length}
+            </span>
+          </div>
+          <div className="h-2 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark rounded-full transition-all duration-500" 
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+        </div>
+        
+        <button 
+          onClick={skipOnboarding}
+          className="text-sm font-bold text-slate-500 hover:text-slate-800 dark:hover:text-white transition-colors"
+        >
+          Lewati
+        </button>
+      </header>
+
+      <main className="flex-1 flex flex-col items-center justify-center p-4 relative z-10">
+        <div className="w-full max-w-2xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -20, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="glass-card p-6 md:p-10"
+            >
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8 text-center leading-tight">
+                {currentQuestion.title}
+              </h1>
+
+              <div className="space-y-4">
+                {currentQuestion.options.map(option => {
+                  const isSelected = answers[currentQuestion.id] === option.id;
+                  return (
+                    <label 
+                      key={option.id}
+                      className={`flex items-center p-4 md:p-5 rounded-2xl cursor-pointer transition-all border-2 ${isSelected ? 'border-primary-light dark:border-primary-dark bg-primary-light/5 dark:bg-primary-dark/10 shadow-lg shadow-primary-light/10 transform scale-[1.02]' : 'border-slate-200 dark:border-white/10 hover:border-primary-light/50 dark:hover:border-primary-dark/50 hover:bg-slate-50 dark:hover:bg-white/5'}`}
+                    >
+                      <input 
+                        type="radio" 
+                        name={`q${currentQuestion.id}`} 
+                        value={option.id} 
+                        className="hidden"
+                        onChange={() => handleSelectOption(currentQuestion.id, option.id)}
+                        checked={isSelected}
+                      />
+                      <span className="text-3xl mr-4 shrink-0">{option.icon}</span>
+                      <span className="text-base md:text-lg font-medium text-slate-800 dark:text-slate-200">
+                        <span className="font-bold mr-2 text-primary-light dark:text-primary-dark">{option.id}.</span> 
+                        {option.text}
+                      </span>
+                      {isSelected && (
+                        <div className="ml-auto w-6 h-6 rounded-full bg-primary-light dark:bg-primary-dark text-white flex items-center justify-center">
+                          <span className="material-icons-round text-sm">check</span>
+                        </div>
+                      )}
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="mt-10 flex items-center justify-between">
+                <button
+                  onClick={handleBack}
+                  className={`px-6 py-3 rounded-xl font-bold transition-all ${currentStep === 0 ? 'opacity-0 pointer-events-none' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 border border-slate-200 dark:border-white/10'}`}
+                >
+                  Kembali
+                </button>
+                
+                <button
+                  onClick={handleNext}
+                  disabled={!isOptionSelected}
+                  className={`px-8 py-3 rounded-xl font-bold transition-all flex items-center gap-2 ${isOptionSelected ? 'bg-primary-light dark:bg-primary-dark text-white shadow-lg shadow-primary-light/30 hover:-translate-y-1' : 'bg-slate-200 dark:bg-white/10 text-slate-400 cursor-not-allowed'}`}
+                >
+                  {currentStep === questions.length - 1 ? 'Selesai & Analisis' : 'Lanjut'}
+                  {currentStep !== questions.length - 1 && <span className="material-icons-round text-sm">arrow_forward</span>}
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </main>
+      
+    </div>
+  );
+};
+
+export default Onboarding;

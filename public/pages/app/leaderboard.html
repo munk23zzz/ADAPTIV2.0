@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papan Peringkat - ADAPTIV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../css/base/variables.css">
+  <link rel="stylesheet" href="../../css/base/reset.css">
+  <link rel="stylesheet" href="../../css/components/navbar.css">
+  <link rel="stylesheet" href="../../css/components/sidebar.css">
+  <link rel="stylesheet" href="../../css/components/buttons.css">
+  <link rel="stylesheet" href="../../css/pages/leaderboard.css">
+  <script src="../../js/core/theme.js"></script>
+</head>
+
+<body class="app-body">
+
+  <div class="app-shell">
+    <!-- ════════════ NAVBAR (PRESERVED) ════════════ -->
+    <header class="app-header" id="app-header" role="banner">
+      <nav class="app-topnav" role="navigation" aria-label="Navigasi utama aplikasi">
+
+        <div class="topnav__left">
+          <!-- Global Menu (Hamburger) -->
+          <button class="btn btn--icon topnav__sidebar-toggle" id="sidebar-toggle-btn" type="button"
+            aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="app-sidebar">
+            <span class="material-icons-round">menu</span>
+          </button>
+
+          <a class="logo-wrap" href="dashboard.html">
+            <img src="../../assets/icons/darkIcon.png" alt="ADAPTIV Logo" class="logo-img logo-dark">
+            <img src="../../assets/icons/lightIcon.png" alt="ADAPTIV Logo" class="logo-img logo-light">
+            <span class="logo-text">ADAPTIV</span>
+          </a>
+        </div>
+
+        <div class="topnav__right">
+          <!-- Theme Toggle -->
+          <button class="btn btn--icon topnav__icon-btn" id="btn-theme" type="button"
+            aria-label="Toggle dark/light mode" title="Ganti tema">
+            <span class="material-icons-round" id="theme-icon">light_mode</span>
+          </button>
+
+          <div class="topbar-divider"></div>
+
+          <!-- User Profile Section -->
+          <div class="user-profile-top">
+            <span class="badge-pro">PRO</span>
+            <div class="user-logo">
+              <img src="../../assets/images/profile_logo_dark.png" alt="User Profile" class="logo-dark">
+              <img src="../../assets/images/profile_logo_light.png" alt="User Profile" class="logo-light">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ═══════════════ GLOBAL DRAWER ═══════════════ -->
+    <div class="global-drawer-overlay" id="global-drawer-overlay"></div>
+    <div class="global-drawer" id="global-drawer">
+
+      <!-- Header -->
+      <div class="drawer-header">
+        <span class="logo-text logo-text--small">ADAPTIV</span>
+        <button class="btn btn--icon" id="btn-close-drawer"><span class="material-icons-round">close</span></button>
+      </div>
+
+      <!-- Zone 1: Menu Utama -->
+      <nav class="drawer-main-nav">
+        <a href="dashboard.html"><span class="material-icons-round">dashboard</span> Beranda</a>
+        <a href="documents.html"><span class="material-icons-round">folder</span> Dokumen Saya</a>
+        <a href="leaderboard.html"><span class="material-icons-round">emoji_events</span> Papan Peringkat</a>
+        <a href="chat.html"><span class="material-icons-round">chat</span> Tutor AI</a>
+      </nav>
+
+      <!-- Zone 2: Terkini (Recents) -->
+      <div class="drawer-recents">
+        <div class="drawer-search-wrap">
+          <span class="material-icons-round drawer-search-icon">search</span>
+          <input type="text" class="drawer-search" id="drawer-search-input" placeholder="Cari history..."
+            aria-label="Cari riwayat belajar">
+        </div>
+        <div class="recents-label">Terkini</div>
+        <a class="recent-item" href="chat.html?session=kalkulus">📁 Kalkulus</a>
+        <a class="recent-item" href="chat.html?session=ppkn">📁 PPKn</a>
+        <a class="recent-item" href="chat.html?session=algoritma">📁 Algoritma &amp; Pemrograman</a>
+      </div>
+
+      <!-- Zone 3: Account Bar -->
+      <div class="drawer-account">
+
+        <!-- Sub-popup Level 2 -->
+        <div class="account-sub-popup hidden" id="account-sub-popup">
+          <div class="sub-popup-email">
+            <span class="material-icons-round">account_circle</span>
+            lloyd@adaptiv.ai
+          </div>
+          <div class="sub-popup-account-row">
+            <div class="account-avatar">L</div>
+            <span class="sub-popup-account-name">Lloyd</span>
+            <span class="material-icons-round sub-popup-check">check</span>
+          </div>
+          <div class="sub-popup-add">
+            <span class="material-icons-round">add</span>
+            Tambah Akun
+          </div>
+        </div>
+
+        <!-- Main Popup Level 1 -->
+        <div class="account-popup hidden" id="account-popup">
+          <div class="popup-user-row" id="popup-user-row">
+            <div class="account-avatar">L</div>
+            <div>
+              <div class="popup-user-name">Lloyd</div>
+              <div class="popup-user-plan">Pro</div>
+            </div>
+            <span class="material-icons-round popup-user-chevron">chevron_right</span>
+          </div>
+          <div class="popup-menu">
+            <button class="popup-item"><span class="material-icons-round">tune</span>Personalisasi</button>
+            <button class="popup-item"><span class="material-icons-round">person_outline</span>Profil</button>
+            <button class="popup-item"><span class="material-icons-round">settings</span>Pengaturan</button>
+            <div class="popup-divider"></div>
+            <button class="popup-item"><span class="material-icons-round">help_outline</span>Bantuan<span
+                class="material-icons-round popup-item-chevron">chevron_right</span></button>
+            <button class="popup-item popup-item--danger"><span
+                class="material-icons-round">logout</span>Keluar</button>
+          </div>
+        </div>
+
+        <!-- Account Bar -->
+        <button class="account-bar" id="account-bar-btn">
+          <div class="account-avatar">L</div>
+          <div class="account-info">
+            <div class="account-name">Lloyd</div>
+            <div class="account-plan">Pro</div>
+          </div>
+        </button>
+      </div>
+
+    </div>
+
+
+
+    <main class="main-content">
+      <div class="leaderboard-wrapper">
+        <!-- Podium Section (Top 3) -->
+        <section class="podium-section" id="podiumSection">
+          <!-- Podium items will be rendered by JS -->
+        </section>
+        <header class="league-header">
+          <div class="league-icon">💎</div>
+          <div class="league-info">
+            <h1>Liga Obsidian</h1>
+            <p class="countdown" id="league-countdown">Berakhir dalam: <span>2h 14j 30m</span></p>
+          </div>
+        </header>
+        <!-- League Tabs -->
+        <nav class="league-tabs" id="leagueTabs">
+          <button class="tab active" data-tab="weekly">Minggu Ini</button>
+          <button class="tab" data-tab="monthly">Bulan Ini</button>
+          <button class="tab" data-tab="all">Semua Waktu</button>
+        </nav>
+
+        <div class="zone-banner zone-promotion-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+          <span>Posisi 5 besar akan naik ke Liga Diamond</span>
+        </div>
+
+        <div class="leaderboard-container">
+          <ul class="leaderboard-list" id="leaderboardList">
+            <!-- Peringkat akan diisi oleh JS -->
+          </ul>
+        </div>
+
+        <div class="zone-banner zone-demotion-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M19 12l-7 7-7-7" />
+          </svg>
+          <span>Posisi 5 terbawah akan turun ke Liga Platinum</span>
+        </div>
+      </div>
+      <div class="sticky-user-bar" id="stickyUserBar">
+        <div class="sticky-avatar"></div>
+        <span class="sticky-rank"></span>
+        <span class="sticky-name"></span>
+        <span class="sticky-time"></span>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/core/navigation.js"></script>
+  <script src="../../js/pages/leaderboard.js"></script>
+</body>
+
+</html>
