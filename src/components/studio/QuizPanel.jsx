@@ -33,8 +33,11 @@ const QuizPanel = ({ sessionKey, title, closeStudio }) => {
 
   if (!activeQuizList.length) {
     return (
-      <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0f1117] items-center justify-center">
-        <p className="text-slate-400">Belum ada kuis untuk sesi ini.</p>
+      <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0f1117] items-center justify-center relative">
+        <button onClick={closeStudio} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-400 transition-colors z-10">
+          <span className="material-icons-round text-[18px]">close</span>
+        </button>
+        <p className="text-slate-400 text-center px-4">Belum ada kuis untuk sesi ini.</p>
       </div>
     );
   }

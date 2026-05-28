@@ -26,27 +26,19 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // We use form-data since OAuth2PasswordRequestForm expects form-urlencoded
-    const formData = new URLSearchParams();
-    formData.append('username', email); // OAuth2 expects 'username'
-    formData.append('password', password);
-
-    const response = await api.post('/auth/login', formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
-
-    localStorage.setItem('access_token', response.data.access_token);
-    
-    // Fetch user details immediately after login
-    const userRes = await api.get('/users/me');
-    setUser(userRes.data);
+    // Bypass login for demonstration
+    const dummyUser = {
+      id: "dummy-id",
+      email: email,
+      name: email.split('@')[0],
+      onboarding_completed: false
+    };
+    localStorage.setItem('access_token', "dummy_token");
+    setUser(dummyUser);
   };
 
   const register = async (name, email, password) => {
-    await api.post('/auth/register', { name, email, password });
-    // Usually we might login automatically after register, or prompt to login
+    // Bypass register for demonstration
     await login(email, password);
   };
 

@@ -68,7 +68,7 @@ const Sidebar = ({ isOpen, setIsOpen, isDark, toggleTheme }) => {
           <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mt-6 mb-2">Terkini</div>
           <div className="space-y-1">
             {[
-              { name: 'Kalkulus', key: 'kalkulus' },
+              { name: 'Scientific Computing', key: 'scientific_computing' },
               { name: 'Creativity & Innovation', key: 'ppkn' },
               { name: 'Algoritma & Pemrograman', key: 'algoritma' }
             ].map((subject, idx) => {
@@ -94,7 +94,7 @@ const Sidebar = ({ isOpen, setIsOpen, isDark, toggleTheme }) => {
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-primary-light to-secondary-light flex items-center justify-center text-white font-extrabold shrink-0 shadow-md group-hover:scale-105 transition-transform text-sm">
               L
             </div>
-            <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-[#0a0a0f] rounded-full"></div>
+            <span className="absolute -bottom-1 -right-1 material-icons-round text-[18px] text-[#FFC327] bg-white dark:bg-[#0a0a0f] rounded-full leading-none">stars</span>
           </div>
           <div className="flex-1 overflow-hidden">
             <div className="text-[13px] font-bold text-slate-900 dark:text-white truncate group-hover:text-primary-light dark:group-hover:text-primary-dark transition-colors">Lloyd</div>

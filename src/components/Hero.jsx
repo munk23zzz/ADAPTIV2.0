@@ -138,7 +138,7 @@ const Hero = () => {
               </div>
               <div className="text-center">
                 <span className="font-bold text-slate-800 dark:text-slate-200 block text-base">Seret & Lepas Dokumen</span>
-                <p className="text-xs text-slate-500 mt-1">Mendukung PDF, PPTX, DOCX (Maks 50MB)</p>
+                <p className="text-xs text-slate-500 mt-1">Mendukung PDF, PPTX, DOCX</p>
               </div>
             </div>
 
@@ -166,8 +166,8 @@ const Hero = () => {
 
               <div className="flex gap-2">
                 <div className="w-9 h-9 flex items-center justify-center shrink-0">
-                  <img src="/assets/images/lightmode.png" alt="AI" className="w-full h-full object-contain block dark:hidden" />
-                  <img src="/assets/images/darkmode.png" alt="AI" className="w-full h-full object-contain hidden dark:block" />
+                  <img src={`${import.meta.env.BASE_URL}assets/images/lightmode.png`} alt="AI" className="w-full h-full object-contain block dark:hidden" />
+                  <img src={`${import.meta.env.BASE_URL}assets/images/darkmode.png`} alt="AI" className="w-full h-full object-contain hidden dark:block" />
                 </div>
                 <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none text-[13px] max-w-[90%] shadow-lg border border-slate-100 dark:border-slate-700">
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed">Berdasarkan modulmu, buffer overflow terjadi ketika memori dipaksa menampung data yang ukurannya melebihi kapasitas (<strong className="text-blue-600 dark:text-blue-400">kapasitas buffer</strong>), sehingga data tersebut "meluber" dan menimpa memori penting lainnya.</p>

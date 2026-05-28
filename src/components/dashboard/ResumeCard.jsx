@@ -10,9 +10,9 @@ const ResumeCard = () => {
         </div>
         <div className="flex-1 min-w-0">
           <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">Lanjutkan Sesi</div>
-          <h4 className="text-base font-bold text-slate-900 dark:text-white truncate">Kartu Belajar — Kalkulus</h4>
+          <h4 className="text-base font-bold text-slate-900 dark:text-white truncate">Kartu Belajar — Scientific Computing</h4>
         </div>
-        <Link to="/chat?session=kalkulus" className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-primary-light dark:hover:bg-primary-dark hover:text-white transition-colors flex items-center justify-center shrink-0">
+        <Link to="/chat?session=scientific_computing" className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-primary-light dark:hover:bg-primary-dark hover:text-white transition-colors flex items-center justify-center shrink-0">
           <span className="material-icons-round">arrow_forward</span>
         </Link>
       </div>

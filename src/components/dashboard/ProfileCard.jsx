@@ -42,15 +42,10 @@ const ProfileCard = () => {
         <span>💎</span> Liga Obsidian
       </div>
       
-      <div className="w-full flex justify-between mt-8 pt-6 border-t border-slate-200 dark:border-white/10">
+      <div className="w-full flex justify-around mt-8 pt-6 border-t border-slate-200 dark:border-white/10">
         <div className="flex flex-col items-center">
           <div className="text-xl font-bold text-slate-800 dark:text-white">24</div>
           <div className="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Kudos</div>
-        </div>
-        <div className="w-px bg-slate-200 dark:bg-white/10"></div>
-        <div className="flex flex-col items-center">
-          <div className="text-xl font-bold text-slate-800 dark:text-white">11</div>
-          <div className="text-xs text-slate-500 uppercase font-semibold tracking-wider mt-1">Teman</div>
         </div>
         <div className="w-px bg-slate-200 dark:bg-white/10"></div>
         <div className="flex flex-col items-center">

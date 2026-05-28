@@ -10,9 +10,12 @@ const TablePanel = ({ sessionKey, title, closeStudio }) => {
 
   if (!activeList.length) {
     return (
-      <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0f1117] items-center justify-center text-slate-400 gap-3">
-        <span className="material-icons-round text-4xl">table_view</span>
-        <p className="text-sm font-bold">Belum ada tabel data untuk sesi ini.</p>
+      <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0f1117] items-center justify-center text-slate-400 gap-3 relative">
+        <button onClick={closeStudio} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-400 transition-colors z-10">
+          <span className="material-icons-round text-[18px]">close</span>
+        </button>
+        <span className="material-icons-round text-4xl">table_chart</span>
+        <p className="text-sm font-bold text-center px-4">Belum ada tabel data untuk sesi ini.</p>
       </div>
     );
   }

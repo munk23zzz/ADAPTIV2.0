@@ -67,6 +67,8 @@ const Chat = ({ isDark, toggleTheme }) => {
 
   // Initialize session
   useEffect(() => {
+    setStudioMode(null);
+    
     if (sessionKey && sessionHistory[sessionKey]) {
       const history = sessionHistory[sessionKey];
       setTitle(history.title);
@@ -77,7 +79,6 @@ const Chat = ({ isDark, toggleTheme }) => {
       setTitle('Obrolan Baru');
       setSources([]);
       setMessages([]);
-      setStudioMode(null);
     }
   }, [sessionKey]);
 
@@ -218,11 +219,11 @@ const Chat = ({ isDark, toggleTheme }) => {
 
               {messages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-center py-20 mt-10">
-                  <div className="w-24 h-24 bg-white dark:bg-[#1a1f2e] rounded-3xl p-4 shadow-xl shadow-primary-light/10 dark:shadow-black/50 mb-8 border border-slate-100 dark:border-white/5 flex items-center justify-center">
+                  <div className="w-32 h-32 mb-8 flex items-center justify-center">
                     {isTempChat ? (
                       <span className="material-icons-round text-6xl text-slate-400 dark:text-slate-500 opacity-50">chat_bubble_outline</span>
                     ) : (
-                      <img src={isDark ? "/assets/images/darkmode.png" : "/assets/images/lightmode.png"} alt="AI" className="w-full h-full object-contain" />
+                      <img src={isDark ? `${import.meta.env.BASE_URL}assets/images/darkmode.png` : `${import.meta.env.BASE_URL}assets/images/lightmode.png`} alt="AI" className="w-full h-full object-contain" />
                     )}
                   </div>
 
@@ -265,25 +266,31 @@ const Chat = ({ isDark, toggleTheme }) => {
                   {messages.map((m, i) => (
                     <div key={i} className={`flex gap-4 ${m.role === 'user' ? 'justify-end' : ''}`}>
                       {m.role === 'ai' && (
-                        <div className="w-8 h-8 rounded-full bg-white dark:bg-[#1a1f2e] flex-shrink-0 flex items-center justify-center border-2 border-white dark:border-[#0a0a0f] shadow-sm overflow-hidden">
-                          <img src={isDark ? "/assets/images/darkmode.png" : "/assets/images/lightmode.png"} className="w-full h-full object-contain" alt="AI" />
+                        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                          <img src={isDark ? `${import.meta.env.BASE_URL}assets/images/darkmode.png` : `${import.meta.env.BASE_URL}assets/images/lightmode.png`} className="w-full h-full object-contain" alt="AI" />
                         </div>
                       )}
 
-                      <div className={`max-w-[85%] rounded-2xl p-4 md:p-5 ${m.role === 'user' ? 'bg-slate-100 dark:bg-white/10 text-slate-800 dark:text-slate-200 rounded-tr-sm' : 'bg-white dark:bg-[#1a1f2e] border border-slate-100 dark:border-white/5 text-slate-800 dark:text-slate-300 shadow-sm rounded-tl-sm'}`}>
+                      <div className={`max-w-[85%] rounded-2xl p-4 md:p-5 ${m.role === 'user' ? 'bg-blue-50 dark:bg-blue-500/10 text-slate-800 dark:text-slate-200 border border-blue-100 dark:border-blue-500/20 shadow-sm rounded-tr-sm' : 'bg-white dark:bg-[#1a1f2e] border border-slate-100 dark:border-white/5 text-slate-800 dark:text-slate-300 shadow-sm rounded-tl-sm'}`}>
                         {m.role === 'user' ? (
                           <div className="font-medium whitespace-pre-wrap">{m.text}</div>
                         ) : (
                           <div className="prose dark:prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-li:my-1" dangerouslySetInnerHTML={{ __html: formatMsgHtml(m.text) }} />
                         )}
                       </div>
+
+                      {m.role === 'user' && (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary-light to-secondary-light flex-shrink-0 flex items-center justify-center text-white font-extrabold text-sm shadow-sm">
+                          L
+                        </div>
+                      )}
                     </div>
                   ))}
 
                   {isTyping && (
                     <div className="flex gap-4">
-                      <div className="w-8 h-8 rounded-full bg-white dark:bg-[#1a1f2e] flex-shrink-0 flex items-center justify-center border-2 border-white dark:border-[#0a0a0f] shadow-sm overflow-hidden">
-                        <img src={isDark ? "/assets/images/darkmode.png" : "/assets/images/lightmode.png"} className="w-full h-full object-contain" alt="AI" />
+                      <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                        <img src={isDark ? `${import.meta.env.BASE_URL}assets/images/darkmode.png` : `${import.meta.env.BASE_URL}assets/images/lightmode.png`} className="w-full h-full object-contain" alt="AI" />
                       </div>
                       <div className="bg-white dark:bg-[#1a1f2e] border border-slate-100 dark:border-white/5 rounded-2xl rounded-tl-sm p-4 md:p-5 flex items-center gap-1.5 shadow-sm">
                         <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600 animate-bounce"></div>

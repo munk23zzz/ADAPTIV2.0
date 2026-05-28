@@ -13,8 +13,11 @@ const FlashcardPanel = ({ sessionKey, title, closeStudio }) => {
 
   if (!activeFcDeck.length) {
     return (
-      <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0f1117] items-center justify-center">
-        <p className="text-slate-400">Belum ada kartu belajar untuk sesi ini.</p>
+      <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0f1117] items-center justify-center relative">
+        <button onClick={closeStudio} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-400 transition-colors z-10">
+          <span className="material-icons-round text-[18px]">close</span>
+        </button>
+        <p className="text-slate-400 text-center px-4">Belum ada kartu belajar untuk sesi ini.</p>
       </div>
     );
   }
@@ -107,23 +110,23 @@ const FlashcardPanel = ({ sessionKey, title, closeStudio }) => {
 
                 {/* BACK */}
                 <div
-                  className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 dark:from-[#1a2030] dark:to-[#0f1420] rounded-2xl border border-slate-700 dark:border-white/10 shadow-lg p-5 flex flex-col justify-center text-center text-white"
+                  className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-white dark:from-[#1a2030] dark:to-[#0f1420] rounded-2xl border border-indigo-100 dark:border-white/10 shadow-lg p-5 flex flex-col justify-center text-center text-slate-800 dark:text-white"
                   style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                 >
                   <div className="flex items-center justify-center gap-1.5 mb-3">
-                    <span className="bg-white/10 text-white/80 px-2.5 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-wider flex items-center gap-1">
+                    <span className="bg-indigo-100 dark:bg-white/10 text-indigo-700 dark:text-white/80 px-2.5 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-wider flex items-center gap-1">
                       <span className="material-icons-round text-[11px]">lightbulb</span> Jawaban
                     </span>
                   </div>
-                  <p className="text-[12px] font-medium leading-relaxed text-slate-200 mb-3">
+                  <p className="text-[12px] font-medium leading-relaxed text-slate-700 dark:text-slate-200 mb-3">
                     {filteredFc[fcIndex].answer}
                   </p>
                   {filteredFc[fcIndex].formula && (
-                    <div className="bg-white/5 border border-white/10 rounded-xl py-2 px-3 font-mono font-bold text-emerald-400 text-[11px] mb-3">
+                    <div className="bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl py-2 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400 text-[11px] mb-3">
                       {filteredFc[fcIndex].formula}
                     </div>
                   )}
-                  <p className="text-[10px] text-slate-400 bg-black/20 px-3 py-2 rounded-lg border border-white/5 leading-relaxed">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-black/20 px-3 py-2 rounded-lg border border-slate-100 dark:border-white/5 leading-relaxed">
                     {filteredFc[fcIndex].subtext}
                   </p>
                 </div>

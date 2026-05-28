@@ -58,6 +58,8 @@ const Chat = ({ isDark, toggleTheme }) => {
 
   // Initialize session
   useEffect(() => {
+    setStudioMode(null);
+    
     if (sessionKey && sessionHistory[sessionKey]) {
       const history = sessionHistory[sessionKey];
       setTitle(history.title);
@@ -68,7 +70,6 @@ const Chat = ({ isDark, toggleTheme }) => {
       setTitle('Obrolan Baru');
       setSources([]);
       setMessages([]);
-      setStudioMode(null);
     }
   }, [sessionKey]);
 

@@ -59,25 +59,34 @@ const Pricing = () => {
         >
           <button
             onClick={() => setIsAnnual(false)}
-            className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 z-10 ${!isAnnual ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
+            className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 z-10 flex items-center justify-center ${!isAnnual ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
           >
-            Bulanan
+            {!isAnnual && (
+              <motion.div
+                layoutId="pricing-pill"
+                className="absolute inset-0 bg-white dark:bg-slate-700 rounded-full shadow-sm"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">Bulanan</span>
           </button>
 
           <button
             onClick={() => setIsAnnual(true)}
-            className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 z-10 flex items-center gap-2 ${isAnnual ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
+            className={`relative px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 z-10 flex items-center justify-center gap-2 ${isAnnual ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
           >
-            Tahunan
-            <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${isAnnual ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400' : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
+            {isAnnual && (
+              <motion.div
+                layoutId="pricing-pill"
+                className="absolute inset-0 bg-white dark:bg-slate-700 rounded-full shadow-sm"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">Tahunan</span>
+            <span className={`relative z-10 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors ${isAnnual ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400' : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-400'}`}>
               -20%
             </span>
           </button>
-
-          {/* Sliding Pill Background */}
-          <div
-            className={`absolute top-1.5 bottom-1.5 bg-white dark:bg-slate-700 rounded-full shadow-sm transition-all duration-300 ease-out z-0 ${isAnnual ? 'left-[98px] w-[140px]' : 'left-1.5 w-[96px]'}`}
-          ></div>
         </motion.div>
       </div>
 

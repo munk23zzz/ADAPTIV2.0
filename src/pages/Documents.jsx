@@ -4,17 +4,19 @@ import DashboardLayout from '../layouts/DashboardLayout';
 
 // Mock Data
 const initialFolders = [
-  { id: 1, name: "Kalkulus", icon: "📐", color: "#a78bfa", fileCount: 4, updated: "14 Jan 2025" }, // violet-400
+  { id: 1, name: "Scientific Computing", icon: "🔢", color: "#6366f1", fileCount: 6, updated: "27 Mei 2025" }, // indigo-500
   { id: 2, name: "Creativity & Innovation", icon: "💡", color: "#fbbf24", fileCount: 10, updated: "27 Mei 2025" }, // amber-400
   { id: 3, name: "Algoritma & Pemrograman", icon: "💻", color: "#2dd4bf", fileCount: 5, updated: "10 Jan 2025" }, // teal-400
 ];
 
 const initialFiles = {
   1: [
-    { name: "Limit_dan_Turunan.pdf", size: "2.4 MB", date: "14 Jan 2025", type: "pdf", status: "ready" },
-    { name: "Integral_Tentu.pdf", size: "1.8 MB", date: "13 Jan 2025", type: "pdf", status: "ready" },
-    { name: "Slide_Kalkulus_Bab3.pptx", size: "3.2 MB", date: "12 Jan 2025", type: "pptx", status: "ready" },
-    { name: "Catatan_Deret.docx", size: "0.5 MB", date: "10 Jan 2025", type: "docx", status: "ready" },
+    { name: "Sistem_Persamaan_Linier.pdf", size: "3.4 MB", date: "27 Mei 2025", type: "pdf", status: "ready" },
+    { name: "System_of_Linear_Equations_part_I_2024.pptx", size: "2.8 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "System_of_Linear_Equations_part_II_2024.pptx", size: "2.5 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Taylor_Series_2024.pptx", size: "1.9 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Numerical_Differentiation_part_I_2024.pptx", size: "2.2 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Ordinary_Differential_Equations_part_I_2024.pptx", size: "2.6 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
   ],
   2: [
     { name: "Session_2_-_Design_Thinking_for_SDGs.pptx", size: "2.1 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
