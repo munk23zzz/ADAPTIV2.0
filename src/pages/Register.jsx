@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { register } = useAuth();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    navigate('/onboarding');
+    setError('');
+
+    if (password !== confirmPassword) {
+      return setError('Kata sandi dan konfirmasi kata sandi tidak cocok.');
+    }
+
+    setIsLoading(true);
+    try {
+      await register(name, email, password);
+      navigate('/onboarding');
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Gagal mendaftar. Silakan coba lagi.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 relative z-10 py-12">
-
-
-
       <motion.main
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -27,6 +46,12 @@ const Register = () => {
           Buat akun <span className="text-primary-light dark:text-primary-dark">ADAPTIV</span>
         </h1>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm">
+            {error}
+          </div>
+        )}
+
         <form className="space-y-5" onSubmit={handleRegister}>
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" htmlFor="name">Nama Lengkap</label>
@@ -34,8 +59,10 @@ const Register = () => {
               type="text"
               id="name"
               required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
-              placeholder="John Doe"
+              placeholder="Masukkan Nama Anda"
             />
           </div>
 
@@ -45,6 +72,8 @@ const Register = () => {
               type="email"
               id="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
               placeholder="nama@email.com"
             />
@@ -57,6 +86,8 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
                 placeholder="Minimal 8 karakter"
               />
@@ -77,8 +108,10 @@ const Register = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirm-password"
                 required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
-                placeholder="Ulangi kata sandi"
+                placeholder="Konfirmasi kata sandi"
               />
               <button
                 type="button"
@@ -90,8 +123,8 @@ const Register = () => {
             </div>
           </div>
 
-          <button type="submit" className="w-full neon-btn py-3 mt-4 text-lg">
-            Daftar
+          <button type="submit" disabled={isLoading} className="w-full neon-btn py-3 mt-4 text-lg disabled:opacity-50">
+            {isLoading ? 'Memproses...' : 'Daftar'}
           </button>
         </form>
 

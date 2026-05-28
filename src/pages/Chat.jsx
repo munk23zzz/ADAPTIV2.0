@@ -222,7 +222,7 @@ const Chat = ({ isDark, toggleTheme }) => {
                     {isTempChat ? (
                       <span className="material-icons-round text-6xl text-slate-400 dark:text-slate-500 opacity-50">chat_bubble_outline</span>
                     ) : (
-                      <img src={isDark ? "/assets/icons/darkmode.png" : "/assets/icons/lightmode.png"} alt="AI" className="w-full h-full object-contain" />
+                      <img src={isDark ? "/assets/images/darkmode.png" : "/assets/images/lightmode.png"} alt="AI" className="w-full h-full object-contain" />
                     )}
                   </div>
 
@@ -266,7 +266,7 @@ const Chat = ({ isDark, toggleTheme }) => {
                     <div key={i} className={`flex gap-4 ${m.role === 'user' ? 'justify-end' : ''}`}>
                       {m.role === 'ai' && (
                         <div className="w-8 h-8 rounded-full bg-white dark:bg-[#1a1f2e] flex-shrink-0 flex items-center justify-center border-2 border-white dark:border-[#0a0a0f] shadow-sm overflow-hidden">
-                          <img src={isDark ? "/assets/icons/darkmode.png" : "/assets/icons/lightmode.png"} className="w-full h-full object-contain" alt="AI" />
+                          <img src={isDark ? "/assets/images/darkmode.png" : "/assets/images/lightmode.png"} className="w-full h-full object-contain" alt="AI" />
                         </div>
                       )}
 
@@ -283,7 +283,7 @@ const Chat = ({ isDark, toggleTheme }) => {
                   {isTyping && (
                     <div className="flex gap-4">
                       <div className="w-8 h-8 rounded-full bg-white dark:bg-[#1a1f2e] flex-shrink-0 flex items-center justify-center border-2 border-white dark:border-[#0a0a0f] shadow-sm overflow-hidden">
-                        <img src={isDark ? "/assets/icons/darkmode.png" : "/assets/icons/lightmode.png"} className="w-full h-full object-contain" alt="AI" />
+                        <img src={isDark ? "/assets/images/darkmode.png" : "/assets/images/lightmode.png"} className="w-full h-full object-contain" alt="AI" />
                       </div>
                       <div className="bg-white dark:bg-[#1a1f2e] border border-slate-100 dark:border-white/5 rounded-2xl rounded-tl-sm p-4 md:p-5 flex items-center gap-1.5 shadow-sm">
                         <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600 animate-bounce"></div>

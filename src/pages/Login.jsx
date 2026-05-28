@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate('/dashboard');
+    setError('');
+    setIsLoading(true);
+    try {
+      await login(email, password);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Gagal masuk. Periksa kembali email dan kata sandi Anda.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 relative z-10 py-12">
-
-
-
       <motion.main
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,6 +38,12 @@ const Login = () => {
           Masuk ke <span className="text-primary-light dark:text-primary-dark">ADAPTIV</span>
         </h1>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm">
+            {error}
+          </div>
+        )}
+
         <form className="space-y-5" onSubmit={handleLogin}>
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" htmlFor="email">Email</label>
@@ -33,6 +51,8 @@ const Login = () => {
               type="email"
               id="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
               placeholder="nama@email.com"
             />
@@ -45,6 +65,8 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
                 placeholder="••••••••"
               />
@@ -62,8 +84,8 @@ const Login = () => {
             <a href="#" className="text-sm text-primary-light dark:text-primary-dark hover:underline font-medium">Lupa kata sandi?</a>
           </div>
 
-          <button type="submit" className="w-full neon-btn py-3 mt-2 text-lg">
-            Masuk
+          <button type="submit" disabled={isLoading} className="w-full neon-btn py-3 mt-2 text-lg disabled:opacity-50">
+            {isLoading ? 'Memproses...' : 'Masuk'}
           </button>
         </form>
 
