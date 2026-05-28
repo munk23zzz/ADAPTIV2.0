@@ -8,6 +8,10 @@ import Dashboard from './pages/Dashboard';
 import Documents from './pages/Documents';
 import Leaderboard from './pages/Leaderboard';
 import Chat from './pages/Chat';
+import PricingPage from './pages/PricingPage';
+import FeaturesPage from './pages/FeaturesPage';
+import HowItWorksPage from './pages/HowItWorksPage';
+import TestimonialsPage from './pages/TestimonialsPage';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -35,11 +39,7 @@ function App() {
   const toggleTheme = () => setIsDark(!isDark);
 
   return (
-    <div className="relative min-h-screen bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 transition-colors duration-300">
-      {/* Background Effects */}
-      <div className="bg-scanline"></div>
-      <div className="bg-gradient-mesh"></div>
-
+    <div className="relative min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300">
       <Routes>
         <Route path="/" element={<Landing isDark={isDark} toggleTheme={toggleTheme} />} />
         <Route path="/login" element={<Login />} />
@@ -49,6 +49,10 @@ function App() {
         <Route path="/documents" element={<Documents isDark={isDark} toggleTheme={toggleTheme} />} />
         <Route path="/leaderboard" element={<Leaderboard isDark={isDark} toggleTheme={toggleTheme} />} />
         <Route path="/chat" element={<Chat isDark={isDark} toggleTheme={toggleTheme} />} />
+        <Route path="/pricing" element={<PricingPage isDark={isDark} toggleTheme={toggleTheme} />} />
+        <Route path="/features" element={<FeaturesPage isDark={isDark} toggleTheme={toggleTheme} />} />
+        <Route path="/how-it-works" element={<HowItWorksPage isDark={isDark} toggleTheme={toggleTheme} />} />
+        <Route path="/testimonials" element={<TestimonialsPage isDark={isDark} toggleTheme={toggleTheme} />} />
       </Routes>
     </div>
   );

@@ -5,7 +5,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 // Mock Data
 const initialFolders = [
   { id: 1, name: "Kalkulus", icon: "📐", color: "#a78bfa", fileCount: 4, updated: "14 Jan 2025" }, // violet-400
-  { id: 2, name: "PPKn", icon: "🏛️", color: "#fb7185", fileCount: 3, updated: "12 Jan 2025" }, // rose-400
+  { id: 2, name: "Creativity & Innovation", icon: "💡", color: "#fbbf24", fileCount: 10, updated: "27 Mei 2025" }, // amber-400
   { id: 3, name: "Algoritma & Pemrograman", icon: "💻", color: "#2dd4bf", fileCount: 5, updated: "10 Jan 2025" }, // teal-400
 ];
 
@@ -17,9 +17,16 @@ const initialFiles = {
     { name: "Catatan_Deret.docx", size: "0.5 MB", date: "10 Jan 2025", type: "docx", status: "ready" },
   ],
   2: [
-    { name: "Pancasila_dan_UUD1945.pdf", size: "1.2 MB", date: "12 Jan 2025", type: "pdf", status: "ready" },
-    { name: "Hak_dan_Kewajiban_Warga_Negara.pdf", size: "1.5 MB", date: "11 Jan 2025", type: "pdf", status: "ready" },
-    { name: "Sistem_Pemerintahan_Indonesia.pptx", size: "2.8 MB", date: "9 Jan 2025", type: "pptx", status: "ready" },
+    { name: "Session_2_-_Design_Thinking_for_SDGs.pptx", size: "2.1 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_3_-_Customer_Insights.pptx", size: "1.8 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_5_-_Value_Creation.pptx", size: "2.0 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_6_-_Business_Idea_Discussion.pptx", size: "1.9 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_7_-_Market_Positioning.pptx", size: "2.3 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_8_-_Revenue_Streams_and_Cost_Structure.pptx", size: "2.5 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_9_-_Business_Analysis.pptx", size: "2.2 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_10_-_Prototype_Creation.pptx", size: "2.4 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_11_-_Prototype_Testing.pptx", size: "2.6 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
+    { name: "Session_13_-_Product_Service_Reporting.pptx", size: "2.1 MB", date: "27 Mei 2025", type: "pptx", status: "ready" },
   ],
   3: [
     { name: "Sorting_Algorithm.pdf", size: "1.5 MB", date: "10 Jan 2025", type: "pdf", status: "ready" },

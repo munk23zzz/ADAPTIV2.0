@@ -10,6 +10,7 @@ const testimonials = [
     role: "Teknik Informatika UI",
     initials: "RA",
     color: "from-blue-500 to-indigo-400",
+    solidColor: "bg-blue-500",
     shadow: "shadow-blue-500/30"
   },
   {
@@ -19,6 +20,7 @@ const testimonials = [
     role: "SMA 8 Jakarta, UTBK 780",
     initials: "SN",
     color: "from-rose-500 to-rose-400",
+    solidColor: "bg-rose-500",
     shadow: "shadow-rose-500/30"
   },
   {
@@ -28,6 +30,7 @@ const testimonials = [
     role: "S2 Manajemen, FEUI",
     initials: "DR",
     color: "from-teal-500 to-teal-400",
+    solidColor: "bg-teal-500",
     shadow: "shadow-teal-500/30"
   },
   {
@@ -37,6 +40,7 @@ const testimonials = [
     role: "Teknik Elektro, ITB",
     initials: "AK",
     color: "from-amber-500 to-amber-400",
+    solidColor: "bg-amber-500",
     shadow: "shadow-amber-500/30"
   }
 ];
@@ -58,20 +62,13 @@ export default function Testimonials() {
   }, [isHovered]);
 
   return (
-    // Responsive Background (Light/Dark Mode)
-    <section id="testimoni" className="py-24 bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 min-h-[80vh] flex flex-col justify-center overflow-hidden relative transition-colors duration-500">
-
-      {/* Premium Background Glows (Adjusted for Light/Dark) */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-300/30 dark:bg-blue-600/20 blur-[150px] rounded-full pointer-events-none -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-300/30 dark:bg-purple-600/20 blur-[150px] rounded-full pointer-events-none translate-y-1/2"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-300/30 dark:bg-cyan-900/20 blur-[120px] rounded-full pointer-events-none"></div>
-
+    <section id="testimoni" className="py-24 bg-transparent text-slate-900 dark:text-slate-50 min-h-[80vh] flex flex-col justify-center relative transition-colors duration-500">
       <div className="text-center mb-16 relative z-10 px-4">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 dark:bg-slate-800/50 text-blue-600 dark:text-blue-400 font-semibold text-sm border border-blue-200 dark:border-blue-500/20 mb-6 backdrop-blur-md shadow-sm dark:shadow-lg"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold text-sm border border-blue-100 dark:border-blue-500/20 mb-6"
         >
           <span className="material-icons-round text-sm">auto_awesome</span>
           Kisah Sukses
@@ -82,9 +79,9 @@ export default function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4"
+          className="text-4xl md:text-5xl lg:text-6xl font-black font-['Plus_Jakarta_Sans'] tracking-tight mb-4"
         >
-          Kata Mereka yang <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">Sudah Lulus</span>
+          Kata Mereka yang <span className="text-blue-600 dark:text-blue-400">Sudah Lulus</span>
         </motion.h2>
 
         <motion.p
@@ -140,15 +137,10 @@ export default function Testimonials() {
               onClick={() => setCurrentIndex(index)}
             >
               {/* Desain Kartu Testimoni */}
-              <div className={`relative bg-white/80 dark:bg-slate-900/60 backdrop-blur-2xl border ${isActive ? 'border-blue-400 dark:border-blue-500/40 shadow-[0_15px_40px_-10px_rgba(59,130,246,0.3)] dark:shadow-2xl' : 'border-slate-200 dark:border-slate-700/50 shadow-xl dark:shadow-none'} p-8 md:p-10 rounded-3xl transition-colors duration-500 overflow-hidden group`}>
+              <div className={`relative bg-white dark:bg-slate-800 border ${isActive ? 'border-2 border-blue-500 shadow-lg' : 'border border-slate-200 dark:border-slate-700 shadow-sm opacity-60'} p-8 md:p-10 rounded-3xl transition-all duration-500 overflow-hidden group`}>
 
                 {/* Highlight garis atas */}
-                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${testimonial.color} ${isActive ? 'opacity-100' : 'opacity-40 dark:opacity-70'} transition-opacity`}></div>
-
-                {/* Background ambient glow dalam kartu aktif */}
-                {isActive && (
-                  <div className={`absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-br ${testimonial.color} opacity-10 dark:opacity-20 blur-3xl rounded-full`}></div>
-                )}
+                <div className={`absolute top-0 left-0 w-full h-1 ${testimonial.solidColor} ${isActive ? 'opacity-100' : 'opacity-40 dark:opacity-70'} transition-opacity`}></div>
 
                 <div className="flex gap-1.5 mb-6 text-amber-400">
                   {[...Array(5)].map((_, i) => (
@@ -166,9 +158,9 @@ export default function Testimonials() {
                 </div>
 
                 <p className={`text-lg md:text-xl ${isActive ? 'text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-300'} mb-8 leading-relaxed font-medium min-h-[120px] md:min-h-[100px] transition-colors duration-500 relative z-10`}>
-                  <span className="text-4xl font-serif text-blue-300 dark:text-blue-500/30 absolute -top-4 -left-4">"</span>
+                  <span className="text-4xl font-serif text-slate-200 dark:text-slate-700 absolute -top-4 -left-4">"</span>
                   {testimonial.quote}
-                  <span className="text-4xl font-serif text-blue-300 dark:text-blue-500/30 absolute -bottom-6 ml-1">"</span>
+                  <span className="text-4xl font-serif text-slate-200 dark:text-slate-700 absolute -bottom-6 ml-1">"</span>
                 </p>
 
                 <div className="flex items-center gap-4 relative z-10">
@@ -193,7 +185,7 @@ export default function Testimonials() {
             key={idx}
             onClick={() => setCurrentIndex(idx)}
             className={`h-2.5 rounded-full transition-all duration-500 ease-out ${idx === currentIndex
-              ? 'w-10 bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)] dark:shadow-[0_0_12px_rgba(59,130,246,0.8)]'
+              ? 'w-10 bg-blue-600'
               : 'w-2.5 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-500'
               }`}
             aria-label={`Go to testimonial ${idx + 1}`}

@@ -14,18 +14,10 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 relative z-10 py-12">
-      
-      <Link to="/" className="absolute top-8 left-8 flex items-center gap-3 group">
-        <div className="relative w-8 h-8 overflow-hidden rounded-lg">
-          <img src="/assets/icons/darkIcon.png" alt="ADAPTIV" className="absolute inset-0 w-full h-full object-cover dark:opacity-100 opacity-0 transition-opacity" />
-          <img src="/assets/icons/lightIcon.png" alt="ADAPTIV" className="absolute inset-0 w-full h-full object-cover dark:opacity-0 opacity-100 transition-opacity" />
-        </div>
-        <span className="font-orbitron font-bold text-lg tracking-widest text-slate-900 dark:text-white group-hover:text-primary-light dark:group-hover:text-primary-dark transition-colors">
-          ADAPTIV
-        </span>
-      </Link>
 
-      <motion.main 
+
+
+      <motion.main
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -38,10 +30,10 @@ const Register = () => {
         <form className="space-y-5" onSubmit={handleRegister}>
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" htmlFor="name">Nama Lengkap</label>
-            <input 
-              type="text" 
-              id="name" 
-              required 
+            <input
+              type="text"
+              id="name"
+              required
               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
               placeholder="John Doe"
             />
@@ -49,10 +41,10 @@ const Register = () => {
 
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" htmlFor="email">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              required 
+            <input
+              type="email"
+              id="email"
+              required
               className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
               placeholder="nama@email.com"
             />
@@ -61,15 +53,15 @@ const Register = () => {
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" htmlFor="password">Kata sandi</label>
             <div className="relative">
-              <input 
-                type={showPassword ? "text" : "password"} 
-                id="password" 
-                required 
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                required
                 className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
                 placeholder="Minimal 8 karakter"
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors p-1"
                 onClick={() => setShowPassword(!showPassword)}
               >
@@ -81,15 +73,15 @@ const Register = () => {
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" htmlFor="confirm-password">Konfirmasi kata sandi</label>
             <div className="relative">
-              <input 
-                type={showConfirmPassword ? "text" : "password"} 
-                id="confirm-password" 
-                required 
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirm-password"
+                required
                 className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-all"
                 placeholder="Ulangi kata sandi"
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors p-1"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
@@ -122,7 +114,7 @@ const Register = () => {
       </motion.main>
 
       <footer className="mt-12 text-center text-sm text-slate-500">
-        <p>Hak Cipta © 2024-2026 ADAPTIV.</p>
+        <p>Hak Cipta © 2026 ADAPTIV.</p>
         <p className="mt-1">Seluruh Hak Cipta Dilindungi. <a href="#" className="hover:underline">Perjanjian Pengguna</a>, <a href="#" className="hover:underline">Kebijakan Privasi</a></p>
       </footer>
     </div>

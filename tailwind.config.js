@@ -10,15 +10,23 @@ export default {
       colors: {
         background: {
           light: '#f8fafc',
+          dark: '#0f172a',
+        },
+        panel: {
+          light: '#e2e8f0',
           dark: '#020617',
         },
+        surface: {
+          light: '#ffffff',
+          dark: '#1e293b',
+        },
         primary: {
-          light: '#3B82F6',
+          light: '#2563EB',
           dark: '#3B82F6',
         },
         secondary: {
-          light: '#8B5CF6',
-          dark: '#8B5CF6',
+          light: '#4F46E5',
+          dark: '#818CF8',
         },
         accent: {
           light: '#0ea5e9',

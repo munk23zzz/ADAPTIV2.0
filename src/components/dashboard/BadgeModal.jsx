@@ -85,7 +85,7 @@ const BadgeModal = ({ isOpen, onClose }) => {
               <div className="mt-8 flex justify-end">
                 <button 
                   onClick={onClose}
-                  className="px-6 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-rose-500/30"
+                  className="px-6 py-2.5 bg-primary-light hover:bg-blue-600 dark:bg-primary-dark dark:hover:bg-blue-500 text-white font-bold rounded-xl transition-colors shadow-lg shadow-primary-light/30 dark:shadow-primary-dark/30"
                 >
                   Mengerti
                 </button>

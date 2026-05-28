@@ -4,8 +4,14 @@ import { motion } from 'framer-motion';
 import TopNav from '../components/dashboard/TopNav';
 import Sidebar from '../components/dashboard/Sidebar';
 
-const DashboardLayout = ({ children, isDark, toggleTheme, noPadding = false, isTempChat, toggleTempChat }) => {
+const DashboardLayout = ({ children, isDark, toggleTheme, noPadding = false, isTempChat, toggleTempChat, headerTitle, triggerOpenSidebar }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (triggerOpenSidebar) {
+      setSidebarOpen(true);
+    }
+  }, [triggerOpenSidebar]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,11 +36,11 @@ const DashboardLayout = ({ children, isDark, toggleTheme, noPadding = false, isT
       </div>
 
       {/* Sidebar Navigation */}
-      <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+      <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} isDark={isDark} toggleTheme={toggleTheme} />
 
       {/* Main Content Area */}
-      <div className={`flex-1 flex flex-col h-screen relative z-10 transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'ml-0'}`}>
-        <TopNav isDark={isDark} toggleTheme={toggleTheme} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} isTempChat={isTempChat} toggleTempChat={toggleTempChat} />
+      <div className="flex-1 flex flex-col h-screen relative z-10 transition-all duration-300 w-full">
+        <TopNav isDark={isDark} toggleTheme={toggleTheme} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} isTempChat={isTempChat} toggleTempChat={toggleTempChat} headerTitle={headerTitle} />
 
         <main className={`flex-1 ${noPadding ? 'overflow-hidden flex flex-col' : 'p-4 md:p-8 overflow-y-auto overflow-x-hidden'}`}>
           <motion.div
@@ -48,10 +54,10 @@ const DashboardLayout = ({ children, isDark, toggleTheme, noPadding = false, isT
         </main>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Overlay Backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-30 backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}

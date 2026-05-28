@@ -77,14 +77,7 @@ const Onboarding = () => {
   const [showWelcome, setShowWelcome] = useState(false);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (showWelcome) {
-      const timer = setTimeout(() => {
-        navigate('/dashboard');
-      }, 3500);
-      return () => clearTimeout(timer);
-    }
-  }, [showWelcome, navigate]);
+
 
   const handleSelectOption = (questionId, optionId) => {
     setAnswers({ ...answers, [questionId]: optionId });
@@ -118,7 +111,7 @@ const Onboarding = () => {
     // Simulate API call for analyzing
     setTimeout(() => {
       setIsAnalyzing(false);
-      setShowWelcome(true);
+      navigate('/dashboard', { state: { showWelcome: true } });
     }, 2500);
   };
 
@@ -127,60 +120,28 @@ const Onboarding = () => {
   const currentQuestion = questions[currentStep];
   const isOptionSelected = !!answers[currentQuestion.id];
 
-  if (showWelcome) {
-    return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0f]">
-        {/* Background elements so it doesn't look completely flat */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-light/10 dark:bg-primary-dark/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none z-0"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary-light/10 dark:bg-secondary-dark/10 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/3 pointer-events-none z-0"></div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8 } }}
-          className="relative z-10 w-full h-full flex items-center justify-center backdrop-blur-xl"
-        >
-          <motion.div 
-            initial={{ y: 20, scale: 0.95 }}
-            animate={{ y: 0, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-            className="text-center px-4 max-w-2xl"
-          >
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 pb-2 bg-gradient-to-r from-emerald-400 to-indigo-500 text-transparent bg-clip-text flex justify-center items-center gap-3">
-              Selamat datang, Lloyd <span className="text-4xl md:text-5xl inline-block" style={{ WebkitTextFillColor: 'initial' }}>👋</span>
-            </h1>
-            <p className="text-lg text-slate-300 font-medium leading-relaxed">
-              AI telah menyesuaikan profil belajarmu. Mari jelajahi pengalaman belajar baru di ADAPTIV.
-            </p>
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
 
   if (showTerms) {
     return (
-      <div className="min-h-screen bg-black/80 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          className="bg-[#1c212b] border border-slate-700/50 w-full max-w-2xl rounded-2xl overflow-hidden flex flex-col shadow-2xl max-h-[90vh]"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-2xl rounded-2xl overflow-hidden flex flex-col shadow-2xl max-h-[90vh]"
         >
-          <div className="p-6 border-b border-slate-700/50 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xl">
-              🤖
-            </div>
-            <h2 className="text-xl font-bold text-white">Syarat & Ketentuan</h2>
+          <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Syarat & Ketentuan</h2>
           </div>
           
-          <div className="p-6 overflow-y-auto flex-1 text-slate-300 text-sm leading-relaxed space-y-6 custom-scrollbar">
+          <div className="p-6 overflow-y-auto flex-1 text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-6 custom-scrollbar">
             <p>
               Dengan menggunakan aplikasi <strong>ADAPTIV</strong>, pengguna dianggap telah membaca, memahami, dan menyetujui seluruh syarat dan ketentuan yang berlaku pada platform ini. ADAPTIV merupakan aplikasi pembelajaran berbasis AI yang dirancang untuk membantu pengguna dalam mencatat, merangkum materi, menyesuaikan metode belajar, serta meningkatkan efektivitas pembelajaran secara personal.
             </p>
 
             <div>
-              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
-                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-blue-600 dark:bg-blue-500 rounded-full inline-block"></span>
                 Kebijakan Privasi & Penggunaan Data AI
               </h3>
               <ul className="space-y-3">
@@ -191,8 +152,8 @@ const Onboarding = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
-                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-blue-600 dark:bg-blue-500 rounded-full inline-block"></span>
                 Hak Cipta & Tanggung Jawab Pengguna
               </h3>
               <ul className="space-y-3">
@@ -203,8 +164,8 @@ const Onboarding = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
-                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-blue-600 dark:bg-blue-500 rounded-full inline-block"></span>
                 Batasan Penggunaan Layanan
               </h3>
               <ul className="space-y-3">
@@ -215,8 +176,8 @@ const Onboarding = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-3">
-                <span className="w-1 h-5 bg-emerald-500 rounded-full inline-block"></span>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-3">
+                <span className="w-1 h-5 bg-blue-600 dark:bg-blue-500 rounded-full inline-block"></span>
                 Pembaruan Layanan
               </h3>
               <p>
@@ -225,18 +186,18 @@ const Onboarding = () => {
             </div>
           </div>
 
-          <div className="p-6 border-t border-slate-700/50 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="p-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <label className="flex items-start gap-3 cursor-pointer group flex-1">
               <div className="relative flex items-center justify-center w-5 h-5 mt-0.5">
                 <input 
                   type="checkbox" 
-                  className="peer appearance-none w-5 h-5 border-2 border-slate-500 rounded-sm checked:bg-emerald-500 checked:border-emerald-500 transition-all cursor-pointer"
+                  className="peer appearance-none w-5 h-5 border-2 border-slate-300 dark:border-slate-600 rounded-sm checked:bg-blue-600 checked:border-blue-600 transition-all cursor-pointer"
                   checked={termsAccepted}
                   onChange={(e) => setTermsAccepted(e.target.checked)}
                 />
                 <span className="material-icons-round text-white text-[14px] absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
               </div>
-              <span className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
+              <span className="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
                 Saya telah membaca dan menyetujui seluruh syarat dan ketentuan aplikasi ADAPTIV.
               </span>
             </label>
@@ -244,7 +205,7 @@ const Onboarding = () => {
             <button
               onClick={handleAcceptTerms}
               disabled={!termsAccepted}
-              className={`shrink-0 px-6 py-3 rounded-lg font-bold transition-all ${termsAccepted ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-900 shadow-lg shadow-emerald-500/20' : 'bg-slate-700 text-slate-500 cursor-not-allowed'}`}
+              className={`shrink-0 px-6 py-3 rounded-lg font-bold transition-all ${termsAccepted ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20' : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500 cursor-not-allowed'}`}
             >
               Mulai Belajar
             </button>

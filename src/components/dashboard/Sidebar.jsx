@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import SettingsModal from './SettingsModal';
 
-const Sidebar = ({ isOpen, setIsOpen }) => {
+const Sidebar = ({ isOpen, setIsOpen, isDark, toggleTheme }) => {
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const currentSession = searchParams.get('session');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   useEffect(() => {
     setIsOpen(false);
@@ -20,10 +24,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       <div className="h-[72px] shrink-0 flex items-center px-5 border-b border-slate-200/50 dark:border-white/5">
         <Link to="/dashboard" className="flex items-center gap-3 group" onClick={() => setIsOpen(false)}>
-          <div className="relative w-8 h-8 overflow-hidden rounded-lg shadow-sm">
-            <img src="/assets/icons/darkIcon.png" alt="ADAPTIV" className="absolute inset-0 w-full h-full object-cover dark:opacity-100 opacity-0 transition-opacity" />
-            <img src="/assets/icons/lightIcon.png" alt="ADAPTIV" className="absolute inset-0 w-full h-full object-cover dark:opacity-0 opacity-100 transition-opacity" />
-          </div>
+
           <span className="font-orbitron font-bold text-lg tracking-widest text-slate-900 dark:text-white group-hover:text-primary-light dark:group-hover:text-primary-dark transition-colors">
             ADAPTIV
           </span>
@@ -46,9 +47,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 key={item.name}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all font-medium group relative overflow-hidden ${isActive ? 'bg-primary-light dark:bg-primary-dark text-white font-bold shadow-md shadow-primary-light/20 dark:shadow-primary-dark/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}
+                className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all font-medium group relative overflow-hidden ${isActive ? 'bg-primary-light/10 dark:bg-primary-dark/20 text-primary-light dark:text-primary-dark font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}
               >
-                {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-white/40 dark:bg-white/60 rounded-r-full" />}
+                {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-primary-light dark:bg-primary-dark rounded-r-full" />}
                 <span className={`material-icons-round text-[20px] transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110 group-hover:text-primary-light dark:group-hover:text-primary-dark'}`}>
                   {item.icon}
                 </span>
@@ -66,20 +67,29 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
           <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mt-6 mb-2">Terkini</div>
           <div className="space-y-1">
-            {['Kalkulus', 'PPKn', 'Algoritma & Pemrograman'].map((subject, idx) => (
-              <a href="#" key={idx} className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors group">
-                <div className="w-7 h-7 rounded-lg bg-orange-50 dark:bg-orange-500/10 text-orange-500 dark:text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-sm">
+            {[
+              { name: 'Kalkulus', key: 'kalkulus' },
+              { name: 'Creativity & Innovation', key: 'ppkn' },
+              { name: 'Algoritma & Pemrograman', key: 'algoritma' }
+            ].map((subject, idx) => {
+              const isActive = location.pathname === '/chat' && currentSession === subject.key;
+              return (
+              <Link to={`/chat?session=${subject.key}`} onClick={() => setIsOpen(false)} key={idx} className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors group ${isActive ? 'bg-primary-light/10 dark:bg-primary-dark/20 text-primary-light dark:text-primary-dark' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}>
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-sm ${isActive ? 'bg-primary-light dark:bg-primary-dark text-white' : 'bg-primary-light/10 dark:bg-primary-dark/10 text-primary-light dark:text-primary-dark'}`}>
                   <span className="material-icons-round text-[14px]">folder</span>
                 </div>
-                <span className="truncate group-hover:font-semibold transition-all text-[13px]">{subject}</span>
-              </a>
-            ))}
+                <span className={`truncate group-hover:font-semibold transition-all text-[13px] ${isActive ? 'font-bold' : ''}`}>{subject.name}</span>
+              </Link>
+            )})}
           </div>
         </div>
       </div>
 
       <div className="shrink-0 p-4 border-t border-slate-200/50 dark:border-white/5 bg-white/80 dark:bg-[#0a0a0f]/80 backdrop-blur-xl">
-        <button className="flex items-center gap-3 w-full p-2 rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all text-left group border border-transparent hover:border-slate-200 dark:hover:border-white/10 hover:shadow-md">
+        <button 
+          onClick={() => setIsSettingsOpen(true)}
+          className="flex items-center gap-3 w-full p-2 rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all text-left group border border-transparent hover:border-slate-200 dark:hover:border-white/10 hover:shadow-md"
+        >
           <div className="relative">
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-primary-light to-secondary-light flex items-center justify-center text-white font-extrabold shrink-0 shadow-md group-hover:scale-105 transition-transform text-sm">
               L
@@ -94,6 +104,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </button>
       </div>
 
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} isDark={isDark} toggleTheme={toggleTheme} />
     </aside>
   );
 };

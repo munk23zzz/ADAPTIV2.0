@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const TopNav = ({ isDark, toggleTheme, toggleSidebar, isTempChat, toggleTempChat }) => {
+const TopNav = ({ isDark, toggleTheme, toggleSidebar, isTempChat, toggleTempChat, headerTitle }) => {
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    if (headerTitle) return headerTitle;
+    if (location.pathname.startsWith('/chat')) return 'Ruang Kerja';
+    switch (location.pathname) {
+      case '/dashboard': return 'Beranda';
+      case '/documents': return 'Dokumen Saya';
+      case '/leaderboard': return 'Peringkat & Pencapaian';
+      default: return 'Dashboard';
+    }
+  };
 
   return (
     <header className="h-20 flex items-center justify-between px-4 md:px-8 border-b border-slate-200 dark:border-white/10 bg-white/50 dark:bg-black/20 backdrop-blur-md sticky top-0 z-30">
       <div className="flex items-center gap-4">
-        <button 
+        <button
           onClick={toggleSidebar}
           className="w-10 h-10 flex items-center justify-center text-slate-600 dark:text-slate-300 bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 hover:text-primary-light dark:hover:text-primary-dark rounded-xl transition-all shadow-sm border border-slate-200/50 dark:border-white/5 hover:scale-105"
         >
           <span className="material-icons-round text-lg">menu</span>
         </button>
-        
+
         {/* Page Title or Breadcrumb could go here */}
-        <h1 className="text-xl font-bold text-slate-900 dark:text-white hidden sm:block">Dashboard</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-white hidden sm:block">{getPageTitle()}</h1>
       </div>
 
       <div className="flex items-center gap-4 md:gap-6">
-        
+
         {/* Temporary Chat Button - Only show if toggle function is provided */}
         {toggleTempChat && (
-          <button 
+          <button
             onClick={toggleTempChat}
             className={`p-2 rounded-xl transition-colors flex items-center justify-center ${isTempChat ? 'text-amber-500 bg-amber-50 dark:bg-amber-500/10' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10'}`}
             title={isTempChat ? "Temporary Chat Aktif" : "Aktifkan Temporary Chat"}
@@ -29,7 +42,7 @@ const TopNav = ({ isDark, toggleTheme, toggleSidebar, isTempChat, toggleTempChat
           </button>
         )}
 
-        <button 
+        <button
           onClick={toggleTheme}
           className="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors"
           title="Ganti Tema"

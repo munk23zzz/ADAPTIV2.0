@@ -12,17 +12,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center px-4 relative z-10">
+    <div className="min-h-screen flex flex-col justify-center items-center px-4 relative z-10 py-12">
 
-      <Link to="/" className="absolute top-8 left-8 flex items-center gap-3 group">
-        <div className="relative w-8 h-8 overflow-hidden rounded-lg">
-          <img src="/assets/icons/darkIcon.png" alt="ADAPTIV" className="absolute inset-0 w-full h-full object-cover dark:opacity-100 opacity-0 transition-opacity" />
-          <img src="/assets/icons/lightIcon.png" alt="ADAPTIV" className="absolute inset-0 w-full h-full object-cover dark:opacity-0 opacity-100 transition-opacity" />
-        </div>
-        <span className="font-orbitron font-bold text-lg tracking-widest text-slate-900 dark:text-white group-hover:text-primary-light dark:group-hover:text-primary-dark transition-colors">
-          ADAPTIV
-        </span>
-      </Link>
+
 
       <motion.main
         initial={{ opacity: 0, y: 20 }}
@@ -94,7 +86,7 @@ const Login = () => {
       </motion.main>
 
       <footer className="mt-12 text-center text-sm text-slate-500">
-        <p>Copyright ©2026 ADAPTIV.</p>
+        <p>Copyright © 2026 ADAPTIV.</p>
         <p className="mt-1">All Rights Reserved. <a href="#" className="hover:underline">Perjanjian Pengguna</a>, <a href="#" className="hover:underline">Kebijakan Privasi</a></p>
       </footer>
     </div>

@@ -2,14 +2,14 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-50 dark:bg-[#030305] border-t border-slate-200 dark:border-white/5 pt-16 pb-8">
+    <footer className="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-white/5 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           
           {/* Brand */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="font-orbitron font-bold text-2xl tracking-widest text-slate-900 dark:text-white">
+              <span className="font-['Plus_Jakarta_Sans'] font-black text-2xl tracking-tight text-slate-900 dark:text-white">
                 ADAPTIV
               </span>
             </div>
@@ -24,11 +24,11 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-slate-900 dark:text-white mb-6">Navigasi</h4>
             <ul className="space-y-3">
-              <li><a href="#fitur" className="text-slate-600 dark:text-slate-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors">Fitur</a></li>
-              <li><a href="#pricing" className="text-slate-600 dark:text-slate-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors">Harga</a></li>
-              <li><a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors">Tentang</a></li>
-              <li><a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors">Kebijakan Privasi</a></li>
-              <li><a href="#" className="text-slate-600 dark:text-slate-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors">Syarat &amp; Ketentuan</a></li>
+              <li><a href="#fitur" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Fitur</a></li>
+              <li><a href="#pricing" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Harga</a></li>
+              <li><a href="#" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Tentang</a></li>
+              <li><a href="#" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Kebijakan Privasi</a></li>
+              <li><a href="#" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Syarat &amp; Ketentuan</a></li>
             </ul>
           </div>
 
@@ -36,13 +36,13 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-slate-900 dark:text-white mb-6">Ikuti Kami</h4>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary-light hover:text-white dark:hover:bg-primary-dark dark:hover:text-black transition-all">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all">
                 <span className="font-bold">IG</span>
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary-light hover:text-white dark:hover:bg-primary-dark dark:hover:text-black transition-all">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all">
                 <span className="font-bold">X</span>
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary-light hover:text-white dark:hover:bg-primary-dark dark:hover:text-black transition-all">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all">
                 <span className="font-bold">IN</span>
               </a>
             </div>

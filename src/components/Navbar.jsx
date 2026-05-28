@@ -1,9 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ isDark, toggleTheme }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHomePage = location.pathname === '/';
+  const isNavbarBlurred = scrolled || !isHomePage;
+
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+
+    if (isHomePage) {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,42 +33,31 @@ const Navbar = ({ isDark, toggleTheme }) => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/70 dark:bg-black/50 backdrop-blur-lg border-b border-white/10 shadow-lg py-3' : 'bg-transparent py-5'}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isNavbarBlurred ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 shadow-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        
+
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 overflow-hidden rounded-xl">
-            <img 
-              src="assets/icons/darkIcon.png" 
-              alt="ADAPTIV Logo" 
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isDark ? 'opacity-100' : 'opacity-0'}`} 
-            />
-            <img 
-              src="assets/icons/lightIcon.png" 
-              alt="ADAPTIV Logo" 
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${!isDark ? 'opacity-100' : 'opacity-0'}`} 
-            />
-          </div>
-          <span className="font-orbitron font-bold text-xl tracking-widest text-slate-900 dark:text-white group-hover:text-primary-light dark:group-hover:text-primary-dark transition-colors">
+        <Link to="/" className="flex items-center gap-3 group">
+
+          <span className="font-['Plus_Jakarta_Sans'] font-black text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             ADAPTIV
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <a href="#fitur" className="text-sm font-medium hover:text-primary-dark transition-colors">Fitur</a>
-          <a href="#carakerja" className="text-sm font-medium hover:text-primary-dark transition-colors">Cara Kerja</a>
-          <a href="#pricing" className="text-sm font-medium hover:text-primary-dark transition-colors">Harga</a>
-          <a href="#testimoni" className="text-sm font-medium hover:text-primary-dark transition-colors">Testimoni</a>
-          
+          <a href="#fitur" onClick={(e) => handleNavClick(e, 'fitur')} className="text-sm font-medium hover:text-primary-dark transition-colors cursor-pointer">Fitur</a>
+          <a href="#carakerja" onClick={(e) => handleNavClick(e, 'carakerja')} className="text-sm font-medium hover:text-primary-dark transition-colors cursor-pointer">Cara Kerja</a>
+          <a href="#pricing" onClick={(e) => handleNavClick(e, 'pricing')} className="text-sm font-medium hover:text-primary-dark transition-colors cursor-pointer">Harga</a>
+          <a href="#testimoni" onClick={(e) => handleNavClick(e, 'testimoni')} className="text-sm font-medium hover:text-primary-dark transition-colors cursor-pointer">Testimoni</a>
+
           <div className="w-px h-6 bg-slate-300 dark:bg-slate-700"></div>
-          
+
           <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-white/10 transition-colors" aria-label="Toggle Theme">
             <span className="material-icons-round">{isDark ? 'light_mode' : 'dark_mode'}</span>
           </button>
-          
-          <Link to="/register" className="neon-btn">
+
+          <Link to="/register" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
             Mulai Gratis
           </Link>
         </nav>
@@ -67,12 +75,12 @@ const Navbar = ({ isDark, toggleTheme }) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#0a0a0f] border-b border-slate-200 dark:border-white/10 shadow-xl py-4 px-4 flex flex-col gap-4">
-          <a href="#fitur" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium">Fitur</a>
-          <a href="#carakerja" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium">Cara Kerja</a>
-          <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium">Harga</a>
-          <a href="#testimoni" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium">Testimoni</a>
-          <Link to="/register" onClick={() => setMobileMenuOpen(false)} className="neon-btn text-center mt-2">Mulai Gratis</Link>
+        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xl py-4 px-4 flex flex-col gap-4">
+          <a href="#fitur" onClick={(e) => handleNavClick(e, 'fitur')} className="block py-2 font-medium cursor-pointer">Fitur</a>
+          <a href="#carakerja" onClick={(e) => handleNavClick(e, 'carakerja')} className="block py-2 font-medium cursor-pointer">Cara Kerja</a>
+          <a href="#pricing" onClick={(e) => handleNavClick(e, 'pricing')} className="block py-2 font-medium cursor-pointer">Harga</a>
+          <a href="#testimoni" onClick={(e) => handleNavClick(e, 'testimoni')} className="block py-2 font-medium cursor-pointer">Testimoni</a>
+          <Link to="/register" onClick={() => setMobileMenuOpen(false)} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm text-center mt-2">Mulai Gratis</Link>
         </div>
       )}
     </header>

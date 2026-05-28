@@ -3,7 +3,7 @@ import React from 'react';
 const SubjectProgress = () => {
   const subjects = [
     { name: 'Kalkulus', icon: '📐', pct: 72, color: 'bg-cyan-500' },
-    { name: 'PPKn', icon: '🏛️', pct: 35, color: 'bg-purple-500' },
+    { name: 'Creativity & Innovation', icon: '💡', pct: 35, color: 'bg-amber-500' },
     { name: 'Algoritma & Pemrograman', icon: '💻', pct: 89, color: 'bg-lime-500' },
   ];
 

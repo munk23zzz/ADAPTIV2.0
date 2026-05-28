@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DashboardLayout from '../layouts/DashboardLayout';
+import { BurstConfetti, FallingConfetti } from '../components/dashboard/LeaderboardConfetti';
 
 export const datasets = {
   weekly: [
@@ -152,7 +153,8 @@ const Leaderboard = ({ isDark, toggleTheme }) => {
 
   return (
     <DashboardLayout isDark={isDark} toggleTheme={toggleTheme}>
-      <div className="max-w-6xl mx-auto pb-24 relative px-4 sm:px-6">
+      <FallingConfetti />
+      <div className="max-w-6xl mx-auto pb-24 relative px-4 sm:px-6 z-10">
         
         {/* SPLIT LAYOUT CONTAINER */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start mt-4">
@@ -198,7 +200,7 @@ const Leaderboard = ({ isDark, toggleTheme }) => {
             </div>
 
             {/* Podium Top 3 */}
-            <div className="flex items-end justify-center gap-2 sm:gap-4 lg:gap-2 mb-8 px-2">
+            <div className="flex items-end justify-center gap-2 sm:gap-4 lg:gap-2 mt-8 lg:mt-10 mb-8 px-2">
           {/* Rank 2 */}
           {top3[1] && (
             <div className="flex flex-col items-center w-28 md:w-32 relative z-10 group">
@@ -222,6 +224,7 @@ const Leaderboard = ({ isDark, toggleTheme }) => {
           {/* Rank 1 */}
           {top3[0] && (
             <div className="flex flex-col items-center w-32 md:w-40 relative z-20 group">
+              <BurstConfetti />
               <div className="absolute -top-6 text-4xl animate-bounce drop-shadow-lg z-30">👑</div>
               <div className="relative mb-3 group-hover:-translate-y-2 transition-transform duration-300 ease-out">
                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-200 dark:from-yellow-600 dark:to-amber-400 p-1 shadow-xl shadow-yellow-500/40 dark:shadow-yellow-500/20 border-4 border-white dark:border-slate-800">
@@ -263,7 +266,7 @@ const Leaderboard = ({ isDark, toggleTheme }) => {
       </div>
 
           {/* KOLOM KANAN: Daftar Sisa & Banner */}
-          <div className="w-full lg:w-[60%] xl:w-[55%] flex flex-col gap-6">
+          <div className="w-full lg:w-[60%] xl:w-[55%] flex flex-col gap-6 relative z-10">
             
             {/* Banner Promosi (Hanya Mingguan) */}
             {isWeekly && (
