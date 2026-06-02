@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADAPTIV — Color Token Preview (Focus Blue)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    /* Latar belakang luar menggunakan slate-950 (Sangat Gelap) */
+    background: #020617; 
+    color: #f8fafc;
+    padding: 48px 32px;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    /* Gradient dari Focus Blue ke Indigo */
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .page-subtitle {
+    text-align: center;
+    color: #64748B;
+    font-size: 14px;
+    margin-bottom: 56px;
+    letter-spacing: 0.02em;
+  }
+
+  .mode-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .mode-col {
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid;
+  }
+
+  /* Container Dark Mode */
+  .mode-col.dark {
+    background: #0f172a; /* slate-900 */
+    border-color: rgba(255,255,255,0.07);
+  }
+
+  /* Container Light Mode */
+  .mode-col.light {
+    background: #f8fafc; /* slate-50 */
+    border-color: rgba(15,23,42,0.10);
+  }
+
+  .mode-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mode-col.dark .mode-label { color: #94a3b8; }
+  .mode-col.light .mode-label { color: #475569; }
+
+  .mode-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .dark .mode-dot { background: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+  .light .mode-dot { background: #2563eb; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+  }
+
+  .mode-col.dark .section-title { color: #64748b; border-color: rgba(255,255,255,0.06); }
+  .mode-col.light .section-title { color: #94a3b8; border-color: rgba(15,23,42,0.08); }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+
+  .swatch {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid;
+    transition: transform 0.2s ease;
+  }
+
+  .swatch:hover { transform: translateY(-2px); }
+
+  .mode-col.dark .swatch { border-color: rgba(255,255,255,0.06); }
+  .mode-col.light .swatch { border-color: rgba(15,23,42,0.08); }
+
+  .swatch-color {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .swatch-info {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .mode-col.dark .swatch-info { background: #1e293b; }
+  .mode-col.light .swatch-info { background: #ffffff; }
+
+  .swatch-token {
+    font-weight: 600;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mode-col.dark .swatch-token { color: #f8fafc; }
+  .mode-col.light .swatch-token { color: #0f172a; }
+
+  .swatch-hex {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 10px;
+  }
+
+  .mode-col.dark .swatch-hex { color: #94a3b8; }
+  .mode-col.light .swatch-hex { color: #64748b; }
+
+  .swatch-wide {
+    grid-column: span 2;
+  }
+
+  .swatch-color.border-demo {
+    border: 2px dashed;
+    margin: 8px;
+    border-radius: 8px;
+    height: 56px;
+  }
+
+  .shadow-demo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .dark .shadow-demo { background: #1e293b; color: #94a3b8; }
+  .light .shadow-demo { background: #ffffff; color: #64748b; }
+
+  .glow-demo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .glow-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+  }
+
+  .dark .glow-dot {
+    background: #3b82f6;
+    box-shadow: 0 0 20px rgba(59,130,246,0.30), 0 0 60px rgba(59,130,246,0.10);
+  }
+
+  .light .glow-dot {
+    background: #2563eb;
+    box-shadow: 0 0 16px rgba(37,99,235,0.20), 0 0 40px rgba(37,99,235,0.06);
+  }
+
+  @media (max-width: 900px) {
+    .mode-columns { grid-template-columns: 1fr; }
+    body { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">ADAPTIV Focus Blue Tokens</h1>
+<p class="page-subtitle">Slate #0F172A + Focus Blue #3B82F6 — Complete UI Color System</p>
+
+<div class="mode-columns">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DARK MODE (FOCUS BLUE) -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="mode-col dark">
+    <div class="mode-label"><span class="mode-dot"></span> Dark Mode (Default)</div>
+
+    <!-- Backgrounds -->
+    <div class="section-title">Backgrounds (Slate)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0f172a; color:#f8fafc;">Base App</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-base</div><div class="swatch-hex">#0f172a (slate-900)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1e293b; color:#f8fafc;">Cards/Surface</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-surface</div><div class="swatch-hex">#1e293b (slate-800)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#334155; color:#f8fafc;">Surface 2/Hover</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-surface-2</div><div class="swatch-hex">#334155 (slate-700)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#020617; color:#f8fafc;">Sidebar/Panel</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-panel</div><div class="swatch-hex">#020617 (slate-950)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(59,130,246,0.15); color:#60a5fa;">Active State</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-active</div><div class="swatch-hex">rgba(blue, 0.15)</div></div>
+      </div>
+    </div>
+
+    <!-- Accents -->
+    <div class="section-title">Brand Accents (Blue)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3b82f6; color:#ffffff; font-weight:700;">Primary CTA</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-primary</div><div class="swatch-hex">#3b82f6 (blue-500)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#60a5fa; color:#0f172a; font-weight:700;">Hover State</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-hover</div><div class="swatch-hex">#60a5fa (blue-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#818cf8; color:#ffffff; font-weight:700;">Secondary</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-secondary</div><div class="swatch-hex">#818cf8 (indigo-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(59,130,246,0.15); color:#60a5fa; border: 1px dashed rgba(59,130,246,0.3);">Subtle Accent</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-subtle</div><div class="swatch-hex">rgba(blue, 0.15)</div></div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="section-title">Typography (Slate)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1e293b; color:#f8fafc; font-weight:600;">Main Heading</div>
+        <div class="swatch-info"><div class="swatch-token">--text-primary</div><div class="swatch-hex">#f8fafc (slate-50)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1e293b; color:#94a3b8;">Paragraph body</div>
+        <div class="swatch-info"><div class="swatch-token">--text-secondary</div><div class="swatch-hex">#94a3b8 (slate-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1e293b; color:#64748b;">Placeholder...</div>
+        <div class="swatch-info"><div class="swatch-token">--text-muted</div><div class="swatch-hex">#64748b (slate-500)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1e293b; color:#60a5fa; text-decoration:underline;">Clickable Link</div>
+        <div class="swatch-info"><div class="swatch-token">--text-link</div><div class="swatch-hex">#60a5fa (blue-400)</div></div>
+      </div>
+    </div>
+
+    <!-- NEW: Icon & Extras Colors -->
+    <div class="section-title">6 Icon & Accent Colors (For Tags, Avatars, Subjects)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(167,139,250,0.15); color:#a78bfa; font-weight:600; border-left: 4px solid #a78bfa;">AI / Creative</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-purple</div><div class="swatch-hex">#a78bfa (violet-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(45,212,191,0.15); color:#2dd4bf; font-weight:600; border-left: 4px solid #2dd4bf;">Growth / STEM</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-teal</div><div class="swatch-hex">#2dd4bf (teal-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(251,191,36,0.15); color:#fbbf24; font-weight:600; border-left: 4px solid #fbbf24;">Energy / Lit</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-amber</div><div class="swatch-hex">#fbbf24 (amber-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(251,113,133,0.15); color:#fb7185; font-weight:600; border-left: 4px solid #fb7185;">Passion / Arts</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-rose</div><div class="swatch-hex">#fb7185 (rose-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(56,189,248,0.15); color:#38bdf8; font-weight:600; border-left: 4px solid #38bdf8;">Cloud / Data</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-sky</div><div class="swatch-hex">#38bdf8 (sky-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(129,140,248,0.15); color:#818cf8; font-weight:600; border-left: 4px solid #818cf8;">Deep Focus</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-indigo</div><div class="swatch-hex">#818cf8 (indigo-400)</div></div>
+      </div>
+    </div>
+
+    <!-- Borders & FX -->
+    <div class="section-title">Borders & FX</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color border-demo" style="background:#0f172a; border-color:#334155; color:#94a3b8;">--border</div>
+        <div class="swatch-info"><div class="swatch-token">--border</div><div class="swatch-hex">#334155 (slate-700)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="glow-demo" style="background:#0f172a;"><div class="glow-dot"></div></div>
+        <div class="swatch-info"><div class="swatch-token">--glow-accent</div><div class="swatch-hex">blue neon glow</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- LIGHT MODE (FOCUS BLUE) -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="mode-col light">
+    <div class="mode-label"><span class="mode-dot"></span> Light Mode</div>
+
+    <!-- Backgrounds -->
+    <div class="section-title">Backgrounds (Slate)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f8fafc; color:#0f172a;">Base App</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-base</div><div class="swatch-hex">#f8fafc (slate-50)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; color:#0f172a;">Cards/Surface</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-surface</div><div class="swatch-hex">#ffffff (white)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f1f5f9; color:#0f172a;">Surface 2/Hover</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-surface-2</div><div class="swatch-hex">#f1f5f9 (slate-100)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e2e8f0; color:#0f172a;">Sidebar/Panel</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-panel</div><div class="swatch-hex">#e2e8f0 (slate-200)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#dbeafe; color:#1d4ed8;">Active State</div>
+        <div class="swatch-info"><div class="swatch-token">--bg-active</div><div class="swatch-hex">#dbeafe (blue-100)</div></div>
+      </div>
+    </div>
+
+    <!-- Accents -->
+    <div class="section-title">Brand Accents (Blue)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2563eb; color:#ffffff; font-weight:700;">Primary CTA</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-primary</div><div class="swatch-hex">#2563eb (blue-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1d4ed8; color:#ffffff; font-weight:700;">Hover State</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-hover</div><div class="swatch-hex">#1d4ed8 (blue-700)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4f46e5; color:#ffffff; font-weight:700;">Secondary</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-secondary</div><div class="swatch-hex">#4f46e5 (indigo-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(37,99,235,0.1); color:#2563eb; border: 1px dashed rgba(37,99,235,0.3);">Subtle Accent</div>
+        <div class="swatch-info"><div class="swatch-token">--accent-subtle</div><div class="swatch-hex">rgba(blue, 0.1)</div></div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="section-title">Typography (Slate)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; color:#0f172a; font-weight:600;">Main Heading</div>
+        <div class="swatch-info"><div class="swatch-token">--text-primary</div><div class="swatch-hex">#0f172a (slate-900)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; color:#475569;">Paragraph body</div>
+        <div class="swatch-info"><div class="swatch-token">--text-secondary</div><div class="swatch-hex">#475569 (slate-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; color:#94a3b8;">Placeholder...</div>
+        <div class="swatch-info"><div class="swatch-token">--text-muted</div><div class="swatch-hex">#94a3b8 (slate-400)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; color:#2563eb; text-decoration:underline;">Clickable Link</div>
+        <div class="swatch-info"><div class="swatch-token">--text-link</div><div class="swatch-hex">#2563eb (blue-600)</div></div>
+      </div>
+    </div>
+
+    <!-- NEW: Icon & Extras Colors -->
+    <div class="section-title">6 Icon & Accent Colors (For Tags, Avatars, Subjects)</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(139,92,246,0.1); color:#8b5cf6; font-weight:600; border-left: 4px solid #8b5cf6;">AI / Creative</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-purple</div><div class="swatch-hex">#8b5cf6 (violet-500)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(13,148,136,0.1); color:#0d9488; font-weight:600; border-left: 4px solid #0d9488;">Growth / STEM</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-teal</div><div class="swatch-hex">#0d9488 (teal-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(217,119,6,0.1); color:#d97706; font-weight:600; border-left: 4px solid #d97706;">Energy / Lit</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-amber</div><div class="swatch-hex">#d97706 (amber-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(225,29,72,0.1); color:#e11d48; font-weight:600; border-left: 4px solid #e11d48;">Passion / Arts</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-rose</div><div class="swatch-hex">#e11d48 (rose-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(2,132,199,0.1); color:#0284c7; font-weight:600; border-left: 4px solid #0284c7;">Cloud / Data</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-sky</div><div class="swatch-hex">#0284c7 (sky-600)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(79,70,229,0.1); color:#4f46e5; font-weight:600; border-left: 4px solid #4f46e5;">Deep Focus</div>
+        <div class="swatch-info"><div class="swatch-token">--icon-indigo</div><div class="swatch-hex">#4f46e5 (indigo-600)</div></div>
+      </div>
+    </div>
+
+    <!-- Borders & FX -->
+    <div class="section-title">Borders & FX</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color border-demo" style="background:#ffffff; border-color:#e2e8f0; color:#475569;">--border</div>
+        <div class="swatch-info"><div class="swatch-token">--border</div><div class="swatch-hex">#e2e8f0 (slate-200)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="glow-demo" style="background:#f8fafc;"><div class="glow-dot" style="background:#2563eb; box-shadow:0 0 16px rgba(37,99,235,0.20), 0 0 40px rgba(37,99,235,0.06);"></div></div>
+        <div class="swatch-info"><div class="swatch-token">--glow-accent</div><div class="swatch-hex">blue glow</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<p style="text-align:center; color:#64748B; font-size:11px; margin-top:48px; letter-spacing:0.05em;">
+  ADAPTIV Design System 2.0 — Updated for Focus Blue & High Legibility
+</p>
+
+</body>
+</html>
