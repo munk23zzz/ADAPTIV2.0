@@ -2,19 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
-import ProfileCard from '../components/dashboard/ProfileCard';
 import QuickStats from '../components/dashboard/QuickStats';
 import SubjectProgress from '../components/dashboard/SubjectProgress';
 import PerformanceChart from '../components/dashboard/PerformanceChart';
 import BadgesCard from '../components/dashboard/BadgesCard';
-import StreakCard from '../components/dashboard/StreakCard';
-import UploadActionCard from '../components/dashboard/UploadActionCard';
-import LeaderboardCard from '../components/dashboard/LeaderboardCard';
 
 const Dashboard = ({ isDark, toggleTheme }) => {
   const location = useLocation();
   const [showWelcome, setShowWelcome] = useState(location.state?.showWelcome || false);
   const [triggerSidebar, setTriggerSidebar] = useState(false);
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) return { text: 'Selamat Pagi', emoji: '☀️' };
+    if (hour >= 12 && hour < 15) return { text: 'Selamat Siang', emoji: '🌤️' };
+    if (hour >= 15 && hour < 19) return { text: 'Selamat Sore', emoji: '🌅' };
+    return { text: 'Selamat Malam', emoji: '🌙' };
+  };
+  const greeting = getGreeting();
 
   useEffect(() => {
     if (showWelcome) {
@@ -69,33 +74,35 @@ const Dashboard = ({ isDark, toggleTheme }) => {
       </AnimatePresence>
 
       <DashboardLayout isDark={isDark} toggleTheme={toggleTheme} triggerOpenSidebar={triggerSidebar}>
-        <motion.div 
+        {/* Greeting Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="mb-6"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            {greeting.text}, Lloyd <span className="text-2xl">{greeting.emoji}</span>
+          </h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Yuk lanjutkan sesi belajarmu hari ini!</p>
+        </motion.div>
+
+        <motion.div
           variants={container}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 pb-12"
         >
-          {/* Left Column: Profile & Stats */}
-          <motion.div variants={item} className="xl:col-span-3 space-y-6">
-            <ProfileCard />
-            <QuickStats />
+          {/* Left Column: Stats */}
+          <motion.div variants={item} className="xl:col-span-4 space-y-6">
             <SubjectProgress />
+            <QuickStats isDark={isDark} />
           </motion.div>
 
-          {/* Center Column: Performance & Actions */}
-          <motion.div variants={item} className="xl:col-span-6 space-y-6">
+          {/* Right Column: Performance & Actions */}
+          <motion.div variants={item} className="xl:col-span-8 space-y-6">
             <PerformanceChart />
             <BadgesCard />
-            <StreakCard />
-            
-            <div className="flex flex-col gap-6">
-              <UploadActionCard />
-            </div>
-          </motion.div>
-
-          {/* Right Column: Leaderboard */}
-          <motion.div variants={item} className="xl:col-span-3">
-            <LeaderboardCard />
           </motion.div>
           
         </motion.div>
